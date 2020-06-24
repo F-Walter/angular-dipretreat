@@ -43,7 +43,7 @@ export class DiPreTreatPremiseComponent {
 
         this.premiseData$.subscribe((a) => {
 
-          this.arrayData = this.arrayData.slice(0,250)  //se si vuole limitare i dati
+          // this.arrayData = this.arrayData.slice(0,500)  //se si vuole limitare i dati
 
           let phArray = []
           let humidityArray = []
