@@ -7,3 +7,10 @@ img {
        Every toolbar row uses a flexbox row layout. */
     flex: 1 1 auto;
   }
+  mat-icon{
+    margin-left: 0px;
+    margin-right: 25px;
+  }
+  #email{
+    font-size: medium; margin-right: 20px;
+  }

@@ -16,7 +16,6 @@ export class DiPreTreatMenuComponent implements OnInit {
   premises$: Observable<Premise>
 
   constructor(
-    public authService: AuthService,
     private router: Router,
     private premiseService: PremiseService) { }
 
@@ -28,13 +27,10 @@ export class DiPreTreatMenuComponent implements OnInit {
       () => console.log("completed"))
   }
 
-  premiseSelected(premiseName:string){
-    this.router.navigate(['premiseDetails'],{queryParams:{premiseName: premiseName}})
+  premiseSelected(premiseId:string){
+    this.router.navigate(['premiseDetails'],{queryParams:{premiseId: premiseId}})
   }
 
-  logout() {
-    // this.authService.logout()
-    this.router.navigate(['home'])
-  }
+
 
 }

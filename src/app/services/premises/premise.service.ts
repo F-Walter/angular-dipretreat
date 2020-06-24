@@ -9,12 +9,12 @@ import { catchError, mergeMap, map, retry } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class PremiseService {
-  getPremiseData(premiseName: string) {
+  getPremiseData(premiseId: string, startDate: string = "2020-01-04", endDate: String = "2020-04-09") {
     //for now the URL is fixed
-    return this.http.get(API.PREMISES_DATA).pipe(
+    return this.http.get(`http://icowms.cloud.reply.eu/sensordata/getFiltered?start=${startDate}&stop=${endDate}&building=${premiseId}`).pipe(
       retry(3),
       catchError(err => of([])),
-     )
+    )
   }
 
   constructor(private http: HttpClient) { }

@@ -7,9 +7,7 @@ export const environment = {
 };
 
 export const API = {
-  PREMISES: "http://icowms.cloud.reply.eu/sensordata/premises",
-  PREMISES_DATA: "http://icowms.cloud.reply.eu/sensordata/getFiltered?start=2020-01-04&stop=2020-04-09&building=1"
- 
+  PREMISES: "http://icowms.cloud.reply.eu/sensordata/premises", 
 }
 
 /*

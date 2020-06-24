@@ -1,2 +1,26 @@
+<app-dipretreat-toolbar></app-dipretreat-toolbar>
+
+<form [formGroup]="datesForm">
+    <mat-form-field  color="primary">
+        <mat-label>Choose start date</mat-label>
+        <input matInput [matDatepicker]="startDatePicker" formControlName="startDate" (dateInput)="changeSelectedDate($event.value)">
+        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker color="primary"></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field  color="primary">
+        <mat-label>Choose end date</mat-label>
+        <input matInput [matDatepicker]="endDatePicker" formControlName="endDate">
+        <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker color="primary"></mat-datepicker>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="submit()">Confirm</button>
+
+
+
+</form>
+
+
 <div id="chartContainer" style="height: 370px; width: 100%; margin-left:auto;margin-right:auto;"></div>
 <div id="chartContainerPH" style="height: 370px; width: 100%; margin-left:auto;margin-right:auto;"></div>
