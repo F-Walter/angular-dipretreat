@@ -103,9 +103,6 @@ export class DiPreTreatPremiseComponent {
             subtitles: [{
               text: "Try Zooming and Panning"
             }],
-            axisX: {
-              valueFormatString: "MMM YYYY"
-            },
             axisY: {
               title: "Humidity[rH %]",
             },
