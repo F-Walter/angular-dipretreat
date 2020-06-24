@@ -5,6 +5,7 @@ import { PremiseService } from 'src/app/services/premises/premise.service';
 import { map, catchError } from 'rxjs/operators';
 import { Sensor } from 'src/app/model/Sensor';
 import * as CanvasJS from '../../external-libraries/canvasjs.min.js';
+import { Point } from 'src/app/model/Point.js';
 
 @Component({
   selector: 'app-di-pre-treat-premise',
@@ -43,7 +44,7 @@ export class DiPreTreatPremiseComponent {
 
         this.premiseData$.subscribe((a) => {
 
-          // this.arrayData = this.arrayData.slice(0,500)  //se si vuole limitare i dati
+          // this.arrayData = this.arrayData.slice(0, 10000)  //se si vuole limitare i dati
 
           let phArray = []
           let humidityArray = []
@@ -53,21 +54,25 @@ export class DiPreTreatPremiseComponent {
 
           for (let i = 0; i < this.arrayData.length; i++) {
 
+
             y = this.arrayData[i].sensor_data;
 
             x = new Date(this.arrayData[i].sensor_timestamp);
 
+            let p: Point = new Point(x, y)
 
             switch (this.arrayData[i].sensor_description) {
               case 'pH':
-                phArray.push({ x: x, y: y })
+                if (!phArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
+                  phArray.push(p)
                 break;
               case 'humidity':
-                humidityArray.push({ x: x, y: y })
+                if (!humidityArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
+                  humidityArray.push(p)
                 break;
               case "temperature":
-                temperatureArray.push({ x: x, y: y })
-                console.log(this.arrayData[i])
+                if (!temperatureArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
+                temperatureArray.push(p)
                 break;
               default:
                 break;
@@ -79,7 +84,9 @@ export class DiPreTreatPremiseComponent {
           console.log(humidityArray.length)
           console.log(temperatureArray.length)
           console.log(phArray.length)
-          
+
+          //   console.log(temperatureArray)
+
           //Sort all arrays
           humidityArray = humidityArray.sort((x1, x2) => {
             return x1.x.getTime() - x2.x.getTime()
