@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Subscription, Observable, of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { PremiseService } from 'src/app/services/premises/premise.service';
-import { map } from 'rxjs/operators';
-import { PremiseData } from 'src/app/model/PremiseData';
+import { map, catchError } from 'rxjs/operators';
 import { Sensor } from 'src/app/model/Sensor';
 import * as CanvasJS from '../../external-libraries/canvasjs.min.js';
 
@@ -18,8 +17,7 @@ export class DiPreTreatPremiseComponent {
 
 
   premiseData$: Observable<any>
-  arrayData: PremiseData[] = []
-  arrayData$: Observable<PremiseData[]>
+  arrayData: Sensor[] = []
 
 
 
@@ -27,54 +25,73 @@ export class DiPreTreatPremiseComponent {
 
     this.activatedRoutesSubscription = activatedRoute.queryParams.subscribe((param) => {
       if (param['premiseName']) {
-        this.premiseData$ = premiseService.getPremiseData(param['premiseName'])
+        this.premiseData$ = premiseService.getPremiseData(param['premiseName']) // per adesso il premiseName non è usato perchè abbiamo un API di default
           .pipe(
             map(data => {
-
-              let dates = Object.keys(data)
               let premiseData = Object.values(data)
 
-              for (let index = 0; index < dates.length; index++) {
-                console.log(premiseData[index].length)
-                for (let i = 0; i < premiseData[index].length; i++) {
-                  this.arrayData.push(new PremiseData(dates[index], new Sensor(premiseData[index][i])))
+              for (let index = 0; index < premiseData.length; index++) {
+                for (let i = 0; i < premiseData.length; i++) {
+                  this.arrayData.push(new Sensor(premiseData[i]))
                 }
               }
-              this.arrayData$ = of(this.arrayData)
-              console.log(this.arrayData)
               return data
             }),
-
+            catchError(_ => of([]))
           )
+
+
         this.premiseData$.subscribe((a) => {
-          console.log(this.arrayData)
 
+          this.arrayData = this.arrayData.slice(0,250)  //se si vuole limitare i dati
 
-          let phArray = [];
+          let phArray = []
           let humidityArray = []
           let temperatureArray = []
-
-          let y = 0;
+          let y;
           let x;
-
-
 
           for (let i = 0; i < this.arrayData.length; i++) {
 
-            y = this.arrayData[i].sensor.sensor_data;
+            y = this.arrayData[i].sensor_data;
 
-            x = this.arrayData[i].date;
+            x = new Date(this.arrayData[i].sensor_timestamp);
 
-            if (this.arrayData[i].sensor.sensor_description === "pH") {
-              phArray.push({ y: y })
-            } else {
-              if (this.arrayData[i].sensor.sensor_description === "humidity")
+
+            switch (this.arrayData[i].sensor_description) {
+              case 'pH':
+                phArray.push({ x: x, y: y })
+                break;
+              case 'humidity':
                 humidityArray.push({ x: x, y: y })
-              else
+                break;
+              case "temperature":
                 temperatureArray.push({ x: x, y: y })
-
+                console.log(this.arrayData[i])
+                break;
+              default:
+                break;
             }
+
           }
+
+          console.log(this.arrayData.length)
+          console.log(humidityArray.length)
+          console.log(temperatureArray.length)
+          console.log(phArray.length)
+          
+          //Sort all arrays
+          humidityArray = humidityArray.sort((x1, x2) => {
+            return x1.x.getTime() - x2.x.getTime()
+          })
+
+          temperatureArray = temperatureArray.sort((x1, x2) => {
+            return x1.x.getTime() - x2.x.getTime()
+          })
+
+          phArray = phArray.sort((x1, x2) => {
+            return x1.x.getTime() - x2.x.getTime()
+          })
 
           var chartHumityTemperature = new CanvasJS.Chart("chartContainer", {
             zoomEnabled: true,
@@ -86,11 +103,14 @@ export class DiPreTreatPremiseComponent {
             subtitles: [{
               text: "Try Zooming and Panning"
             }],
+            axisX: {
+              valueFormatString: "MMM YYYY"
+            },
             axisY: {
               title: "Humidity[rH %]",
             },
             axisY2: {
-              title: "Temperature[ ]",
+              title: "Temperature[ ]", //TODO: definire unità 
             },
             legend: {
               cursor: "pointer",
@@ -107,7 +127,6 @@ export class DiPreTreatPremiseComponent {
                 name: "Humidity",
                 axisYType: "primary",
                 showInLegend: true,
-
                 dataPoints: humidityArray
               },
               {
@@ -115,15 +134,12 @@ export class DiPreTreatPremiseComponent {
                 name: "Temperature",
                 axisYType: "secondary",
                 showInLegend: true,
-
                 dataPoints: temperatureArray
               },
 
 
             ]
           });
-
-
 
           var chartPH = new CanvasJS.Chart("chartContainerPH", {
             zoomEnabled: true,
@@ -135,8 +151,6 @@ export class DiPreTreatPremiseComponent {
             subtitles: [{
               text: "Try Zooming and Panning"
             }],
-
-
             axisY: {
               title: "PH[rH %]",
             },
@@ -157,7 +171,6 @@ export class DiPreTreatPremiseComponent {
 
             ]
           });
-
 
           chartHumityTemperature.render();
           chartPH.render();
