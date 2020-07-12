@@ -1,0 +1,9 @@
+<mat-toolbar color="primary">
+    <img routerLink="/DiPreTreatHome" alt="DiPreTreat Logo" src="assets/logo.png"/>
+    <span class="example-fill-remaining-space"></span>
+
+    <span id="email">{{authService.userMail}}</span>
+
+    <mat-icon aria-hidden="false" aria-label="Example logout icon" (click)="logout()">logout
+    </mat-icon>
+</mat-toolbar>

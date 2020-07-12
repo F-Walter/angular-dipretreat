@@ -1,26 +1,16 @@
-<mat-toolbar color="primary">
-    <img alt="DiPreTreat Logo" src="assets/logo.png" />
-    <span class="example-fill-remaining-space"></span>
-
-    <span id="email">{{authService.userMail}}</span>
-
-    <mat-icon aria-hidden="false" aria-label="Example logout icon" (click)="logout()">logout
-    </mat-icon>
-</mat-toolbar>
-
+<app-dipretreat-toolbar></app-dipretreat-toolbar>
 <!-- sposta stile -->
-<div style="text-align: center;height:100%; margin-top: 10%;">
 
-
+<div id="selectPromise">
     <mat-form-field>
         <mat-label>Choose a Premise</mat-label>
         <mat-select [(ngModel)]="selectedValue" name="premise" (selectionChange)="premiseSelected($event.value)">
-            <mat-option *ngFor="let premise of premises$|async" [value]="premise.premises_name">
+            <mat-option *ngFor="let premise of premises$|async" [value]="premise.premises_id">
                 {{premise.premises_name}}</mat-option>
         </mat-select>
     </mat-form-field>
 
 
-
-
 </div>
+
+

@@ -1,67 +1,105 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subscription, Observable, of } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PremiseService } from 'src/app/services/premises/premise.service';
 import { map, catchError } from 'rxjs/operators';
 import { Sensor } from 'src/app/model/Sensor';
 import * as CanvasJS from '../../external-libraries/canvasjs.min.js';
 import { Point } from 'src/app/model/Point.js';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-di-pre-treat-premise',
   templateUrl: './di-pre-treat-premise.component.html',
   styleUrls: ['./di-pre-treat-premise.component.css']
 })
-export class DiPreTreatPremiseComponent {
+export class DiPreTreatPremiseComponent implements OnInit {
 
   activatedRoutesSubscription: Subscription
 
 
   premiseData$: Observable<any>
-  arrayData: Sensor[] = []
+  datesForm: FormGroup;
+  premiseId: string
+  startDateSelected: string;
+  endDateSelected: string;
 
 
+  constructor(private activatedRoute: ActivatedRoute, private premiseService: PremiseService, private fb: FormBuilder, private router: Router) {
+    this.datesForm = fb.group({
+      startDate: [''],
+      endDate: ['']
+    })
 
-  constructor(activatedRoute: ActivatedRoute, premiseService: PremiseService) {
+    this.premiseData$ = of([])
+    console.log(this.datesForm)
+  }
 
-    this.activatedRoutesSubscription = activatedRoute.queryParams.subscribe((param) => {
-      if (param['premiseName']) {
-        this.premiseData$ = premiseService.getPremiseData(param['premiseName']) // per adesso il premiseName non è usato perchè abbiamo un API di default
+  changeSelectedDate(date: Date) {
+    console.log(date.toISOString().substring(0, 10))
+  }
+
+  submit() {
+    if(this.datesForm.value.startDate.getTime() <= this.datesForm.value.endDate.getTime() ) //TODO: avvisare in caso di errore
+    this.router.navigate(["/premiseDetails"], { queryParams: { premiseId: this.premiseId, startDate: this.datesForm.value.startDate.toISOString().substring(0, 10), endDate: this.datesForm.value.endDate.toISOString().substring(0, 10) } })
+  }
+
+  ngOnInit(): void {
+
+    this.activatedRoutesSubscription = this.activatedRoute.queryParams.subscribe((param) => {
+      if (param['premiseId']) {
+        this.premiseId = param['premiseId']
+
+        if (param['startDate'])
+          this.startDateSelected = param['startDate']
+        else
+        this.startDateSelected = "2020-01-04"
+
+
+        if (param['endDate'])
+          this.endDateSelected = param['endDate']
+        else
+        this.endDateSelected = "2020-04-09"
+
+        let arrayData: Sensor[] = []
+        console.log(param['premiseId'])
+       
+
+        this.premiseData$ = this.premiseService.getPremiseData(this.premiseId, this.startDateSelected, this.endDateSelected) // per adesso il premiseName non è usato perchè abbiamo un API di default
           .pipe(
             map(data => {
               let premiseData = Object.values(data)
-
               for (let index = 0; index < premiseData.length; index++) {
                 for (let i = 0; i < premiseData.length; i++) {
-                  this.arrayData.push(new Sensor(premiseData[i]))
+                  arrayData.push(new Sensor(premiseData[i]))
                 }
               }
-              return data
+              return arrayData
             }),
             catchError(_ => of([]))
           )
 
 
-        this.premiseData$.subscribe((a) => {
+        this.premiseData$.subscribe((arrayData: Sensor[]) => {
 
-          // this.arrayData = this.arrayData.slice(0, 10000)  //se si vuole limitare i dati
-
+          // arrayData = arrayData.slice(0, 10000)  //se si vuole limitare i dati
+          console.log(arrayData)
           let phArray = []
           let humidityArray = []
           let temperatureArray = []
           let y;
           let x;
 
-          for (let i = 0; i < this.arrayData.length; i++) {
+          for (let i = 0; i < arrayData.length; i++) {
 
 
-            y = this.arrayData[i].sensor_data;
+            y = arrayData[i].sensor_data;
 
-            x = new Date(this.arrayData[i].sensor_timestamp);
+            x = new Date(arrayData[i].sensor_timestamp);
 
             let p: Point = new Point(x, y)
 
-            switch (this.arrayData[i].sensor_description) {
+            switch (arrayData[i].sensor_description) {
               case 'pH':
                 if (!phArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
                   phArray.push(p)
@@ -72,7 +110,7 @@ export class DiPreTreatPremiseComponent {
                 break;
               case "temperature":
                 if (!temperatureArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
-                temperatureArray.push(p)
+                  temperatureArray.push(p)
                 break;
               default:
                 break;
@@ -80,7 +118,7 @@ export class DiPreTreatPremiseComponent {
 
           }
 
-          console.log(this.arrayData.length)
+          console.log(arrayData.length)
           console.log(humidityArray.length)
           console.log(temperatureArray.length)
           console.log(phArray.length)
