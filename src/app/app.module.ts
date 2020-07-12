@@ -23,6 +23,9 @@ import { MatSelectModule } from '@angular/material/select';
 import {MatNativeDateModule} from '@angular/material/core'
 import {MatDatepickerModule} from '@angular/material/datepicker'; 
 
+import { CountryFlagDirective} from './country-flag.directive';
+
+
 //////////////////////////////////////////////////
 // import {A11yModule} from '@angular/cdk/a11y';
 // import {ClipboardModule} from '@angular/cdk/clipboard';
@@ -63,6 +66,8 @@ import { DiPreTreatPremiseComponent } from './components/di-pre-treat-premise/di
 import { DipretreatToolbarComponent } from './components/di-pre-treat-toolbar/dipretreat-toolbar.component';
 
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,7 +76,8 @@ import { DipretreatToolbarComponent } from './components/di-pre-treat-toolbar/di
     DiPreTreatMenuComponent,
     DiPreTreatLoginComponent,
     DiPreTreatPremiseComponent,
-    DipretreatToolbarComponent
+    DipretreatToolbarComponent,
+    CountryFlagDirective,
   ],
   imports: [
     BrowserModule,
@@ -93,6 +99,7 @@ import { DipretreatToolbarComponent } from './components/di-pre-treat-toolbar/di
     MatTreeModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    
     
     
     

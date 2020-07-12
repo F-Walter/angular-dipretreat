@@ -13,6 +13,8 @@ import { PremiseService } from 'src/app/services/premises/premise.service';
 export class DiPreTreatMenuComponent implements OnInit {
 
   selectedValue: string;
+  selectedCountryValue:string;
+  
   premises$: Observable<Premise>
 
   constructor(
