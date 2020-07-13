@@ -8,9 +8,22 @@ img {
     flex: 1 1 auto;
   }
 
+  form{
+    margin-bottom: 2%;
+  }
+  h2{
+    margin-top: 2%;
+    text-align: center;
+  }
+
   #dateContainer{
-    margin-top: 5%;
+    margin-top: 2%;
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+  div{
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-bottom: 2%;
   }

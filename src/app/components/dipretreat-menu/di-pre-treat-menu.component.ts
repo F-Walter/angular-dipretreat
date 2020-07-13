@@ -13,8 +13,8 @@ import { PremiseService } from 'src/app/services/premises/premise.service';
 export class DiPreTreatMenuComponent implements OnInit {
 
   selectedValue: string;
-  selectedCountryValue:string;
-  
+  selectedCountryValue: string;
+
   premises$: Observable<Premise>
 
   constructor(
@@ -29,8 +29,12 @@ export class DiPreTreatMenuComponent implements OnInit {
       () => console.log("completed"))
   }
 
-  premiseSelected(premiseId:string){
-    this.router.navigate(['premiseDetails'],{queryParams:{premiseId: premiseId}})
+  premiseSelected(premiseId: string) {
+    this.router.navigate(['premiseDetails'], { queryParams: { premiseId: premiseId } })
+  }
+
+  countrySelected(country: string) {
+    console.log("country: " + country)
   }
 
 

@@ -64,7 +64,7 @@ import { CountryFlagDirective} from './country-flag.directive';
 import { MatTreeModule } from '@angular/material/tree';
 import { DiPreTreatPremiseComponent } from './components/di-pre-treat-premise/di-pre-treat-premise.component';
 import { DipretreatToolbarComponent } from './components/di-pre-treat-toolbar/dipretreat-toolbar.component';
-
+import { DiPreTreatMapComponent } from './components/di-pre-treat-map/di-pre-treat-map.component';
 
 
 
@@ -78,6 +78,7 @@ import { DipretreatToolbarComponent } from './components/di-pre-treat-toolbar/di
     DiPreTreatPremiseComponent,
     DipretreatToolbarComponent,
     CountryFlagDirective,
+    DiPreTreatMapComponent,
   ],
   imports: [
     BrowserModule,
@@ -99,7 +100,6 @@ import { DipretreatToolbarComponent } from './components/di-pre-treat-toolbar/di
     MatTreeModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    
     
     
     
