@@ -1,7 +1,6 @@
 import { Component, OnInit,ChangeDetectorRef} from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
-import { environment } from '../../../environments/environment';
-
+import { environment,positions} from '../../../environments/environment';
 
 @Component({
   selector: 'app-di-pre-treat-map',
@@ -13,7 +12,10 @@ export class DiPreTreatMapComponent implements OnInit {
   style = 'mapbox://styles/mapbox/streets-v11';
   lat = 37.75;
   lng = -122.41;
-  constructor() { }
+  constructor() {
+    console.log(positions.toString()) 
+   }
+
   ngOnInit() {
     var map = mapboxgl
     map.accessToken  = environment.mapbox.accessToken;
