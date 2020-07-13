@@ -23,7 +23,7 @@ export class DiPreTreatPremiseComponent implements OnInit {
   premiseId: string
   startDateSelected: string;
   endDateSelected: string;
-
+  closedAlert: boolean
 
   constructor(private activatedRoute: ActivatedRoute, private premiseService: PremiseService, private fb: FormBuilder, private router: Router) {
     this.datesForm = fb.group({
@@ -32,7 +32,9 @@ export class DiPreTreatPremiseComponent implements OnInit {
     })
 
     this.premiseData$ = of([])
-    console.log(this.datesForm)
+
+    this.closedAlert = true
+    // console.log(this.datesForm)
   }
 
   changeSelectedDate(date: Date) {
@@ -40,8 +42,12 @@ export class DiPreTreatPremiseComponent implements OnInit {
   }
 
   submit() {
-    if(this.datesForm.value.startDate.getTime() <= this.datesForm.value.endDate.getTime() ) //TODO: avvisare in caso di errore
-    this.router.navigate(["/premiseDetails"], { queryParams: { premiseId: this.premiseId, startDate: this.datesForm.value.startDate.toISOString().substring(0, 10), endDate: this.datesForm.value.endDate.toISOString().substring(0, 10) } })
+    if (this.datesForm.value.startDate.getTime() <= this.datesForm.value.endDate.getTime()) {//TODO: avvisare in caso di errore
+      this.closedAlert = true;
+      this.router.navigate(["/premiseDetails"], { queryParams: { premiseId: this.premiseId, startDate: this.datesForm.value.startDate.toISOString().substring(0, 10), endDate: this.datesForm.value.endDate.toISOString().substring(0, 10) } })
+    } else {
+      this.closedAlert = false
+    }
   }
 
   ngOnInit(): void {
@@ -53,17 +59,17 @@ export class DiPreTreatPremiseComponent implements OnInit {
         if (param['startDate'])
           this.startDateSelected = param['startDate']
         else
-        this.startDateSelected = "2020-01-04"
+          this.startDateSelected = "2020-01-04"
 
 
         if (param['endDate'])
           this.endDateSelected = param['endDate']
         else
-        this.endDateSelected = "2020-04-09"
+          this.endDateSelected = "2020-04-09"
 
         let arrayData: Sensor[] = []
         console.log(param['premiseId'])
-       
+
 
         this.premiseData$ = this.premiseService.getPremiseData(this.premiseId, this.startDateSelected, this.endDateSelected) // per adesso il premiseName non è usato perchè abbiamo un API di default
           .pipe(

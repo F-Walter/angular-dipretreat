@@ -2,6 +2,10 @@
 
 <h2>Define the time window</h2>
     <form id="dateContainer" [formGroup]="datesForm">
+
+        <ngb-alert type="danger" *ngIf="!closedAlert" (close)="closedAlert=true">The inserted dates are not in the righ order.</ngb-alert>
+
+
         <mat-form-field color="primary">
             <mat-label>Choose start date</mat-label>
             <input matInput [matDatepicker]="startDatePicker" formControlName="startDate"
@@ -16,6 +20,8 @@
             <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #endDatePicker color="primary"></mat-datepicker>
         </mat-form-field>
+
+
 
         <button mat-raised-button color="primary" (click)="submit()">Confirm</button>
     </form>

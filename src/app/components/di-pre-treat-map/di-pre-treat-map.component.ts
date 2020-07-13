@@ -50,7 +50,7 @@ export class DiPreTreatMapComponent implements OnInit {
         this.map = new mapboxgl.Map({
           container: 'map',
           style: this.style,
-          zoom: 7,
+          zoom: 5,
           center: [this.lng, this.lat]
         });
 
