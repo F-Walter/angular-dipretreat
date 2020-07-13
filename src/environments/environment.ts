@@ -9,7 +9,7 @@ export const environment = {
   }
 };
 
-export const API = {
+export const API_PREMISES = {
   PREMISES: "http://icowms.cloud.reply.eu/sensordata/premises", 
 }
 
