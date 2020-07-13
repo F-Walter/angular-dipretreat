@@ -13,7 +13,7 @@ export const API = {
   PREMISES: "http://icowms.cloud.reply.eu/sensordata/premises", 
 }
 
-export const positions =[
+export const positions = [
   {
     "country": "AD",
     "latitude": 42.546245,

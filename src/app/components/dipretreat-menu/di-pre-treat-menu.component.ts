@@ -35,6 +35,9 @@ export class DiPreTreatMenuComponent implements OnInit {
 
   countrySelected(country: string) {
     console.log("country: " + country)
+
+
+    this.router.navigate(['map'], { queryParams: { country: country } })
   }
 
 
