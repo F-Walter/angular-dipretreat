@@ -76,8 +76,29 @@ export class DiPreTreatMapComponent implements OnInit {
             .addTo(this.map);
         })
 
+      //  //Add searchbar
+      //   var geocoder = new MapboxGeocoder({ // Initialize the geocoder
+      //     accessToken: mapboxgl.accessToken, // Set the access token
+      //     mapboxgl: mapboxgl, // Set the mapbox-gl instance
+      //     marker: false, // Do not use the default marker style
+      //   });
+
+        // // Add the geocoder to the map
+        // this.map.addControl(geocoder);
+
         // Add map controls
         this.map.addControl(new mapboxgl.NavigationControl());
+
+        this.map.addControl(new mapboxgl.GeolocateControl({
+          positionOptions: {
+            enableHighAccuracy: true
+          },
+          trackUserLocation: true
+        }));
+
+
+
+
       })
     })
 
