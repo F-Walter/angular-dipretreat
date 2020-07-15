@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { environment, positions } from '../../../environments/environment';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PremiseService } from '../../services/premises/premise.service';
-import { element } from 'protractor';
-import { Premise } from 'src/app/model/Premise';
 
 @Component({
   selector: 'app-di-pre-treat-map',
@@ -18,7 +16,7 @@ export class DiPreTreatMapComponent implements OnInit {
   lng: number;
   selectedCountry: string;
   arrayAllPremises: [];
-  constructor(private activatedRoute: ActivatedRoute, private premiseService: PremiseService) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private premiseService: PremiseService) {
     //by default
     this.lat = 37.75;
     this.lng = -122.41;
@@ -44,7 +42,7 @@ export class DiPreTreatMapComponent implements OnInit {
       premises$.subscribe((premises) => {
 
         //set access token 
-        var map = mapboxgl
+        let map = mapboxgl
         map.accessToken = environment.mapbox.accessToken;
 
         this.map = new mapboxgl.Map({
@@ -54,34 +52,48 @@ export class DiPreTreatMapComponent implements OnInit {
           center: [this.lng, this.lat]
         });
 
-        var premiseArray = premises as [];
+        let premiseArray = premises as [];
 
         this.arrayAllPremises = premiseArray
 
         //element is a premise
         this.arrayAllPremises.forEach(element => {
 
-          var e: any
+          let e: any
           e = element
 
-          var lat: number
-          var lng: number
+          let lat: number
+          let lng: number
 
           lat = e.premises_geom.x
           lng = e.premises_geom.y
 
+          let premiseId = e.premises_id
+          let premiseName = e.premises_name
+          let corrosion_level = Number(e.corrosion_level)
+
+          let popup = new mapboxgl.Popup({ offset: 25 })
+            .setText(`Name: ${premiseName} - Corrosion level: ${corrosion_level}`);
+
           // add the marker to the map corresponding to the position of the premises
-          new mapboxgl.Marker()
+          let marker = new mapboxgl.Marker()
             .setLngLat([lng, lat])
+            .setPopup(popup) // sets a popup on this marker
             .addTo(this.map);
+
+          marker.getElement().addEventListener('mouseenter', () => marker.togglePopup());
+          marker.getElement().addEventListener('mouseleave', () => marker.togglePopup());
+
+          marker.getElement().addEventListener('click', () => this.router.navigate(['premiseDetails'], { queryParams: { premiseId: premiseId}}))
+
         })
 
-      //  //Add searchbar
-      //   var geocoder = new MapboxGeocoder({ // Initialize the geocoder
-      //     accessToken: mapboxgl.accessToken, // Set the access token
-      //     mapboxgl: mapboxgl, // Set the mapbox-gl instance
-      //     marker: false, // Do not use the default marker style
-      //   });
+        //  //Add searchbar
+        //   var geocoder = new MapboxGeocoder({ // Initialize the geocoder
+        //     accessToken: mapboxgl.accessToken, // Set the access token
+        //     mapboxgl: mapboxgl, // Set the mapbox-gl instance
+        //     marker: false, // Do not use the default marker style
+        //   });
 
         // // Add the geocoder to the map
         // this.map.addControl(geocoder);
