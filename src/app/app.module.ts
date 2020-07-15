@@ -67,6 +67,8 @@ import { DipretreatToolbarComponent } from './components/di-pre-treat-toolbar/di
 import { DiPreTreatMapComponent } from './components/di-pre-treat-map/di-pre-treat-map.component';
 
 
+import {MatSlideToggleModule} from '@angular/material/slide-toggle'; 
+
 
 @NgModule({
   declarations: [
@@ -100,7 +102,7 @@ import { DiPreTreatMapComponent } from './components/di-pre-treat-map/di-pre-tre
     MatTreeModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    
+    MatSlideToggleModule,
     
     
 

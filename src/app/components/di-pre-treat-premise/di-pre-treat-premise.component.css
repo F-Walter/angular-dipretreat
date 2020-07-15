@@ -22,8 +22,29 @@ img {
     flex-direction: column;
     align-items: center;
   }
-  div{
+  #chartContainer #chartContainerPH{
     margin-left: 2%;
     margin-right: 2%;
     margin-bottom: 2%;
+  }
+
+  #container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  #externalContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .title{
+    font-weight: bold;
+  }
+  #infoPremise{
+    margin-top: 2%;
   }

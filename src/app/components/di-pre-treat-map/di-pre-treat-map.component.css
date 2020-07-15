@@ -1,5 +1,12 @@
 .match-parent {
-    margin: 5%;
-    width: 90%;
-    height: 80%;
+  margin: 2%;
+  width: 96%;
+  height: 80%;
+  }
+
+  #slider{
+    position: absolute;
+    margin-top: 145px;
+    margin-left: 97.5%;
+    z-index: 3;
   }
