@@ -18,12 +18,24 @@ export class DiPreTreatPremiseComponent implements OnInit {
   activatedRoutesSubscription: Subscription
 
 
+
   premiseData$: Observable<any>
-  datesForm: FormGroup;
   premiseId: string
+  datesForm: FormGroup;
   startDateSelected: string;
   endDateSelected: string;
   closedAlert: boolean
+
+
+  //Premise information
+
+  premise_id: string
+  premise_name: string;
+  premise_geom: string;
+  last_maintanance: string;
+  corrosion_level: string;
+  last_inspection: string;
+  creation_year: string;
 
   constructor(private activatedRoute: ActivatedRoute, private premiseService: PremiseService, private fb: FormBuilder, private router: Router) {
     this.datesForm = fb.group({
@@ -35,10 +47,18 @@ export class DiPreTreatPremiseComponent implements OnInit {
 
     this.closedAlert = true
     // console.log(this.datesForm)
+
+    this.premise_id = "N/A"
+    this.premise_name = "N/A"
+    this.premise_geom = "N/A"
+    this.last_maintanance = "N/A"
+    this.corrosion_level = "N/A"
+    this.last_inspection = "N/A"
+    this.creation_year = "N/A"
   }
 
   changeSelectedDate(date: Date) {
-    console.log(date.toISOString().substring(0, 10))
+    // console.log(date.toISOString().substring(0, 10))
   }
 
   submit() {
@@ -68,7 +88,30 @@ export class DiPreTreatPremiseComponent implements OnInit {
           this.endDateSelected = "2020-04-09"
 
         let arrayData: Sensor[] = []
-        console.log(param['premiseId'])
+        // console.log(param['premiseId'])
+
+
+        this.premiseService.getAllPremises().subscribe((e) => {
+          let element: any = e;
+          element.forEach(premise => {
+            if (premise.premises_id == this.premiseId) {
+              if (premise.premises_id)
+                this.premise_id = premise.premises_id
+              if (premise.premises_name)
+                this.premise_name = premise.premises_name;
+              if (premise.premises_geom)
+                this.premise_geom = "Lat " + premise.premises_geom.x + " - Lng " + premise.premises_geom.y;
+              if (premise.last_maintanance)
+                this.last_maintanance = premise.last_maintanance;
+              if (premise.corrosion_level)
+                this.corrosion_level = premise.corrosion_level;
+              if (premise.last_inspection)
+                this.last_inspection = premise.last_inspection;
+              if (premise.creation_year)
+                this.creation_year = premise.creation_year.substring(0, 10);
+            }
+          });
+        })
 
 
         this.premiseData$ = this.premiseService.getPremiseData(this.premiseId, this.startDateSelected, this.endDateSelected) // per adesso il premiseName non è usato perchè abbiamo un API di default
@@ -89,7 +132,7 @@ export class DiPreTreatPremiseComponent implements OnInit {
         this.premiseData$.subscribe((arrayData: Sensor[]) => {
 
           // arrayData = arrayData.slice(0, 10000)  //se si vuole limitare i dati
-          console.log(arrayData)
+          // console.log(arrayData)
           let phArray = []
           let humidityArray = []
           let temperatureArray = []
@@ -124,10 +167,10 @@ export class DiPreTreatPremiseComponent implements OnInit {
 
           }
 
-          console.log(arrayData.length)
-          console.log(humidityArray.length)
-          console.log(temperatureArray.length)
-          console.log(phArray.length)
+          // console.log(arrayData.length)
+          // console.log(humidityArray.length)
+          // console.log(temperatureArray.length)
+          // console.log(phArray.length)
 
           //   console.log(temperatureArray)
 

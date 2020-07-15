@@ -3,6 +3,7 @@ import * as mapboxgl from 'mapbox-gl';
 import { environment, positions } from '../../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PremiseService } from '../../services/premises/premise.service';
+import { style } from '@angular/animations';
 
 @Component({
   selector: 'app-di-pre-treat-map',
@@ -11,7 +12,7 @@ import { PremiseService } from '../../services/premises/premise.service';
 })
 export class DiPreTreatMapComponent implements OnInit {
   map: mapboxgl.Map;
-  style = 'mapbox://styles/mapbox/streets-v11';
+  style = 'mapbox://styles/mapbox/streets-v11'; // style: 'mapbox://styles/mapbox/satellite-v9'
   lat: number;
   lng: number;
   selectedCountry: string;
@@ -84,7 +85,7 @@ export class DiPreTreatMapComponent implements OnInit {
           marker.getElement().addEventListener('mouseenter', () => marker.togglePopup());
           marker.getElement().addEventListener('mouseleave', () => marker.togglePopup());
 
-          marker.getElement().addEventListener('click', () => this.router.navigate(['premiseDetails'], { queryParams: { premiseId: premiseId}}))
+          marker.getElement().addEventListener('click', () => this.router.navigate(['premiseDetails'], { queryParams: { premiseId: premiseId } }))
 
         })
 
@@ -107,13 +108,18 @@ export class DiPreTreatMapComponent implements OnInit {
           },
           trackUserLocation: true
         }));
-
-
-
-
       })
     })
-
   }
+
+  switchStyle() {
+
+    if (this.style == 'mapbox://styles/mapbox/streets-v11')
+      this.style = 'mapbox://styles/mapbox/satellite-v9'
+    else this.style = 'mapbox://styles/mapbox/streets-v11'
+    this.map.setStyle(this.style)
+  }
+
+
 }
 
