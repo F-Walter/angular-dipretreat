@@ -13,10 +13,11 @@ import { PremiseService } from 'src/app/services/premises/premise.service';
 export class DiPreTreatMenuComponent implements OnInit {
 
   selectedValue: string;
+  selectedCountryValue: string;
+
   premises$: Observable<Premise>
 
   constructor(
-    public authService: AuthService,
     private router: Router,
     private premiseService: PremiseService) { }
 
@@ -28,13 +29,17 @@ export class DiPreTreatMenuComponent implements OnInit {
       () => console.log("completed"))
   }
 
-  premiseSelected(premiseName:string){
-    this.router.navigate(['premiseDetails'],{queryParams:{premiseName: premiseName}})
+  premiseSelected(premiseId: string) {
+    this.router.navigate(['premiseDetails'], { queryParams: { premiseId: premiseId } })
   }
 
-  logout() {
-    // this.authService.logout()
-    this.router.navigate(['home'])
+  countrySelected(country: string) {
+    console.log("country: " + country)
+
+
+    this.router.navigate(['map'], { queryParams: { country: country } })
   }
+
+
 
 }

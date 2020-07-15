@@ -4,6 +4,7 @@ import { PageNotFoundComponent } from './components/not-found/page-not-found.com
 import { HomeComponent } from './components/home/home.component';
 import { DiPreTreatMenuComponent } from './components/dipretreat-menu/di-pre-treat-menu.component';
 import { DiPreTreatPremiseComponent } from './components/di-pre-treat-premise/di-pre-treat-premise.component';
+import { DiPreTreatMapComponent } from './components/di-pre-treat-map/di-pre-treat-map.component';
 
 
 
@@ -26,6 +27,10 @@ const routes: Routes = [
     path: 'premiseDetails',
     component: DiPreTreatPremiseComponent
   },
+  {
+  path: 'map',
+  component: DiPreTreatMapComponent
+},
   {
     path: 'logged',
     children: [

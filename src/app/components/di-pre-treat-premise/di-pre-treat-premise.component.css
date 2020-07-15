@@ -1,0 +1,29 @@
+img {
+    height: 50px;
+    background-color: white;
+  }
+  .example-fill-remaining-space {
+    /* This fills the remaining space, by using flexbox. 
+       Every toolbar row uses a flexbox row layout. */
+    flex: 1 1 auto;
+  }
+
+  form{
+    margin-bottom: 2%;
+  }
+  h2{
+    margin-top: 2%;
+    text-align: center;
+  }
+
+  #dateContainer{
+    margin-top: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  div{
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-bottom: 2%;
+  }

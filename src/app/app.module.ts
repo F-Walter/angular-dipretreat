@@ -19,9 +19,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { DiPreTreatLoginComponent } from './components/dipretreat-login/di-pre-treat-login.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-
-
 import { MatSelectModule } from '@angular/material/select';
+import {MatNativeDateModule} from '@angular/material/core'
+import {MatDatepickerModule} from '@angular/material/datepicker'; 
+
+import { CountryFlagDirective} from './country-flag.directive';
+
 
 //////////////////////////////////////////////////
 // import {A11yModule} from '@angular/cdk/a11y';
@@ -60,7 +63,8 @@ import { MatSelectModule } from '@angular/material/select';
 // import {MatTabsModule} from '@angular/material/tabs';
 import { MatTreeModule } from '@angular/material/tree';
 import { DiPreTreatPremiseComponent } from './components/di-pre-treat-premise/di-pre-treat-premise.component';
-
+import { DipretreatToolbarComponent } from './components/di-pre-treat-toolbar/dipretreat-toolbar.component';
+import { DiPreTreatMapComponent } from './components/di-pre-treat-map/di-pre-treat-map.component';
 
 
 
@@ -71,7 +75,10 @@ import { DiPreTreatPremiseComponent } from './components/di-pre-treat-premise/di
     HomeComponent,
     DiPreTreatMenuComponent,
     DiPreTreatLoginComponent,
-    DiPreTreatPremiseComponent
+    DiPreTreatPremiseComponent,
+    DipretreatToolbarComponent,
+    CountryFlagDirective,
+    DiPreTreatMapComponent,
   ],
   imports: [
     BrowserModule,
@@ -91,7 +98,11 @@ import { DiPreTreatPremiseComponent } from './components/di-pre-treat-premise/di
     MatInputModule,
     MatSelectModule,
     MatTreeModule,
-
+    MatDatepickerModule,
+    MatNativeDateModule,
+    
+    
+    
 
     /////////////////////////
     // A11yModule,
