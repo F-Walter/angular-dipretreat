@@ -13,7 +13,7 @@
 
     <mat-form-field>
         <mat-label>Choose a Country</mat-label>
-        <mat-select appCountryFlags 
+        <mat-select 
         [(ngModel)]="selectedCountryValue" name="country" (selectionChange)="countrySelected($event.value)">
         <mat-option value="AF">Afghanistan</mat-option>
         <mat-option value="AX">Åland Islands</mat-option>

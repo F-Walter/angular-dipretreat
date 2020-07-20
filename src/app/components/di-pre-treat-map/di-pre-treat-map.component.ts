@@ -108,7 +108,7 @@ export class DiPreTreatMapComponent implements OnInit {
             //Corrosion likely - orange
             case 2:
               popup = new mapboxgl.Popup({ offset: 25 })
-                .setText(`Name: ${premiseName} -"Corrosion likely`);
+                .setText(`Name: ${premiseName} - Corrosion likely`);
 
               marker = new mapboxgl.Marker({ color: 'orange' })
                 .setLngLat([lng, lat])
