@@ -1,15 +1,12 @@
 <app-dipretreat-toolbar></app-dipretreat-toolbar>
 
 
-
-<div id="externalContainer">
-    <div id="container">
         <form id="dateContainer" [formGroup]="datesForm">
-            <h2>Define the time window</h2>
+            <h2>Define time window</h2>
             <ngb-alert type="danger" *ngIf="!closedAlert" (close)="closedAlert=true">
                 The inserted dates are not in the right order.</ngb-alert>
             <mat-form-field color="primary">
-                <mat-label>Choose start date</mat-label>
+                <mat-label>Start date</mat-label>
                 <input matInput [matDatepicker]="startDatePicker" formControlName="startDate"
                     (dateInput)="changeSelectedDate($event.value)">
                 <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
@@ -17,7 +14,7 @@
             </mat-form-field>
 
             <mat-form-field color="primary">
-                <mat-label>Choose end date</mat-label>
+                <mat-label>End date</mat-label>
                 <input matInput [matDatepicker]="endDatePicker" formControlName="endDate">
                 <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
                 <mat-datepicker #endDatePicker color="primary"></mat-datepicker>
@@ -25,22 +22,24 @@
             <button mat-raised-button color="primary" (click)="submit()">Confirm</button>
         </form>
 
-        <div id="infoPremise">
-            <p><span class="title"> ID: </span> <span id="premise_id">{{premise_id}}</span> </p>
-            <p><span class="title"> Name: </span> <span id="premise_name">{{premise_name}} </span> </p>
-            <p><span class="title"> Position: </span> <span id="premise_geom">{{premise_geom}} </span> </p>
-            <p><span class="title"> Last maintanance: </span> <span id="last_maintanance">{{last_maintanance}} </span> </p>
-            <p><span class="title"> Corrosion level: </span> <span id="corrosion_level">{{corrosion_level}} </span> </p>
-            <p><span class="title"> Last inspection: </span> <span id="last_inspection">{{last_inspection}} </span> </p>
-            <p><span class="title"> Creation year: </span> <span id="creation_year">{{creation_year}} </span> </p>
-        </div>
+    
 
+<div id="externalContainer">
+    <div id="container">
+        <div id="chartContainer" style="height: 370px; width: 100%; margin-left:auto;margin-right:auto;"></div>
+        <div id="chartContainerPH" style="height: 370px; width: 100%; margin-left:auto;margin-right:auto;"></div>
+    </div>
+   
+    <div id="infoPremise">
+        <p><span class="title"> ID: </span> <span id="premise_id">{{premise_id}}</span> </p>
+        <p><span class="title"> Name: </span> <span id="premise_name">{{premise_name}} </span> </p>
+        <p><span class="title"> Position: </span> <span id="premise_geom">{{premise_geom}} </span> </p>
+        <p><span class="title"> Last maintanance: </span> <span id="last_maintanance">{{last_maintanance}} </span> </p>
+        <p><span class="title"> Corrosion level: </span> <span id="corrosion_level">{{corrosion_level}} </span> </p>
+        <p><span class="title"> Last inspection: </span> <span id="last_inspection">{{last_inspection}} </span> </p>
+        <p><span class="title"> Creation year: </span> <span id="creation_year">{{creation_year}} </span> </p>
     </div>
 
 </div>
 
 
-
-
-<div id="chartContainer" style="height: 370px; width: 100%; margin-left:auto;margin-right:auto;"></div>
-<div id="chartContainerPH" style="height: 370px; width: 100%; margin-left:auto;margin-right:auto;"></div>

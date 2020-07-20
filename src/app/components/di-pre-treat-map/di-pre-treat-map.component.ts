@@ -3,7 +3,11 @@ import * as mapboxgl from 'mapbox-gl';
 import { environment, positions } from '../../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PremiseService } from '../../services/premises/premise.service';
-import { style } from '@angular/animations';
+
+import StylesControl from 'mapbox-gl-controls/lib/styles';
+
+
+
 
 @Component({
   selector: 'app-di-pre-treat-map',
@@ -108,18 +112,27 @@ export class DiPreTreatMapComponent implements OnInit {
           },
           trackUserLocation: true
         }));
+
+
+        // with custom styles:
+        this.map.addControl(new StylesControl({
+          styles: [
+            {
+              label: 'Road',
+              styleUrl: 'mapbox://styles/mapbox/streets-v11',
+            }, {
+              label: 'Earth',
+              styleUrl: 'mapbox://styles/mapbox/satellite-v9',
+            },
+          ],
+          onChange: (style) => console.log(style),
+        }), 'top-right');
       })
     })
   }
 
-  switchStyle() {
-
-    if (this.style == 'mapbox://styles/mapbox/streets-v11')
-      this.style = 'mapbox://styles/mapbox/satellite-v9'
-    else this.style = 'mapbox://styles/mapbox/streets-v11'
-    this.map.setStyle(this.style)
-  }
 
 
 }
+
 
