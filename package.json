@@ -21,6 +21,7 @@
     "@types/mapbox-gl": "^1.11.1",
     "bootstrap": "^4.4.0",
     "mapbox-gl": "^1.11.1",
+    "mapbox-gl-controls": "^1.6.4",
     "rxjs": "~6.5.4",
     "svg-country-flags": "^1.2.7",
     "tslib": "^1.10.0",

@@ -23,7 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
 import {MatNativeDateModule} from '@angular/material/core'
 import {MatDatepickerModule} from '@angular/material/datepicker'; 
 
-import { CountryFlagDirective} from './country-flag.directive';
+// import { CountryFlagDirective} from './country-flag.directive';
 
 
 //////////////////////////////////////////////////
@@ -79,7 +79,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     DiPreTreatLoginComponent,
     DiPreTreatPremiseComponent,
     DipretreatToolbarComponent,
-    CountryFlagDirective,
+    // CountryFlagDirective,
     DiPreTreatMapComponent,
   ],
   imports: [

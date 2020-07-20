@@ -12,15 +12,15 @@ img {
     margin-bottom: 2%;
   }
   h2{
-    margin-top: 2%;
     text-align: center;
   }
 
   #dateContainer{
     margin-top: 2%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-evenly;
   }
   #chartContainer #chartContainerPH{
     margin-left: 2%;
@@ -31,20 +31,23 @@ img {
   #container{
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-content: center;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
   }
 
   #externalContainer{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    margin-left: 2%;
+    margin-right: 4%;
   }
   .title{
     font-weight: bold;
   }
   #infoPremise{
     margin-top: 2%;
+    margin-left: 2%;
   }

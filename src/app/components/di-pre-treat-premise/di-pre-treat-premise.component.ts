@@ -70,6 +70,12 @@ export class DiPreTreatPremiseComponent implements OnInit {
     }
   }
 
+  //TODO: integration with other company
+  submitCorrosionForcast(){
+    console.log("Corrosion Forecast");
+
+  }
+
   ngOnInit(): void {
 
     this.activatedRoutesSubscription = this.activatedRoute.queryParams.subscribe((param) => {
@@ -198,10 +204,10 @@ export class DiPreTreatPremiseComponent implements OnInit {
               text: "Try Zooming and Panning"
             }],
             axisY: {
-              title: "Humidity[rH %]",
+              title: "Humidity[%]",
             },
             axisY2: {
-              title: "Temperature[ ]", //TODO: definire unità 
+              title: "Temperature[C]", //TODO: definire unità 
             },
             legend: {
               cursor: "pointer",
@@ -243,7 +249,7 @@ export class DiPreTreatPremiseComponent implements OnInit {
               text: "Try Zooming and Panning"
             }],
             axisY: {
-              title: "PH[rH %]",
+              title: "PH[%]",
             },
             legend: {
               cursor: "pointer",

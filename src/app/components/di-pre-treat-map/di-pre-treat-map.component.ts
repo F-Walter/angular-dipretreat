@@ -3,7 +3,11 @@ import * as mapboxgl from 'mapbox-gl';
 import { environment, positions } from '../../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PremiseService } from '../../services/premises/premise.service';
-import { style } from '@angular/animations';
+
+import StylesControl from 'mapbox-gl-controls/lib/styles';
+
+
+
 
 @Component({
   selector: 'app-di-pre-treat-map',
@@ -72,22 +76,75 @@ export class DiPreTreatMapComponent implements OnInit {
           let premiseId = e.premises_id
           let premiseName = e.premises_name
           let corrosion_level = Number(e.corrosion_level)
-
-          let popup = new mapboxgl.Popup({ offset: 25 })
-            .setText(`Name: ${premiseName} - Corrosion level: ${corrosion_level}`);
+          let popup;
 
           // add the marker to the map corresponding to the position of the premises
-          let marker = new mapboxgl.Marker()
-            .setLngLat([lng, lat])
-            .setPopup(popup) // sets a popup on this marker
-            .addTo(this.map);
+
+          let marker: mapboxgl.Marker;
+
+          switch (corrosion_level) {
+            //No corrosion - green
+            case 0:
+              popup = new mapboxgl.Popup({ offset: 25 })
+                .setText(`Name: ${premiseName} - No corrosion`);
+
+              marker = new mapboxgl.Marker({ color: 'green' })
+                .setLngLat([lng, lat])
+                .setPopup(popup) // sets a popup on this marker
+                .addTo(this.map);
+              break;
+
+            // Uncertain level of corrosion - yellow
+            case 1:
+              popup = new mapboxgl.Popup({ offset: 25 })
+                .setText(`Name: ${premiseName} - Uncertain level of corrosion`);
+
+              marker = new mapboxgl.Marker({ color: 'yellow' })
+                .setLngLat([lng, lat])
+                .setPopup(popup) // sets a popup on this marker
+                .addTo(this.map);
+              break;
+
+            //Corrosion likely - orange
+            case 2:
+              popup = new mapboxgl.Popup({ offset: 25 })
+                .setText(`Name: ${premiseName} - Corrosion likely`);
+
+              marker = new mapboxgl.Marker({ color: 'orange' })
+                .setLngLat([lng, lat])
+                .setPopup(popup) // sets a popup on this marker
+                .addTo(this.map);
+              break;
+
+            //Severe state of corrosion - red  
+            case 3: //red
+              popup = new mapboxgl.Popup({ offset: 25 })
+                .setText(`Name: ${premiseName} - Severe state of corrosion`);
+
+              marker = new mapboxgl.Marker({ color: 'red' })
+                .setLngLat([lng, lat])
+                .setPopup(popup) // sets a popup on this marker
+                .addTo(this.map);
+              break;
+
+            //error case -> N/A corrosion level
+            default:
+              popup = new mapboxgl.Popup({ offset: 25 })
+                .setText(`Name: ${premiseName} - Corrosion level: N/A`);
+
+              marker = new mapboxgl.Marker()
+                .setLngLat([lng, lat])
+                .setPopup(popup) // sets a popup on this marker
+                .addTo(this.map);
+              break;
+          }
 
           marker.getElement().addEventListener('mouseenter', () => marker.togglePopup());
           marker.getElement().addEventListener('mouseleave', () => marker.togglePopup());
-
           marker.getElement().addEventListener('click', () => this.router.navigate(['premiseDetails'], { queryParams: { premiseId: premiseId } }))
 
         })
+
 
         //  //Add searchbar
         //   var geocoder = new MapboxGeocoder({ // Initialize the geocoder
@@ -108,18 +165,27 @@ export class DiPreTreatMapComponent implements OnInit {
           },
           trackUserLocation: true
         }));
+
+
+        // with custom styles:
+        this.map.addControl(new StylesControl({
+          styles: [
+            {
+              label: 'Road',
+              styleUrl: 'mapbox://styles/mapbox/streets-v11',
+            }, {
+              label: 'Earth',
+              styleUrl: 'mapbox://styles/mapbox/satellite-v9',
+            },
+          ],
+          onChange: (style) => console.log(style),
+        }), 'top-right');
       })
     })
   }
 
-  switchStyle() {
-
-    if (this.style == 'mapbox://styles/mapbox/streets-v11')
-      this.style = 'mapbox://styles/mapbox/satellite-v9'
-    else this.style = 'mapbox://styles/mapbox/streets-v11'
-    this.map.setStyle(this.style)
-  }
 
 
 }
+
 
