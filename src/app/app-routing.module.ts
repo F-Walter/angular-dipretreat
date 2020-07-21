@@ -5,6 +5,8 @@ import { HomeComponent } from './components/home/home.component';
 import { DiPreTreatMenuComponent } from './components/dipretreat-menu/di-pre-treat-menu.component';
 import { DiPreTreatPremiseComponent } from './components/di-pre-treat-premise/di-pre-treat-premise.component';
 import { DiPreTreatMapComponent } from './components/di-pre-treat-map/di-pre-treat-map.component';
+import { GridListUCComponent } from './components/di-pre-treat-grid-list/grid-list-uc.component';
+import { UseCaseDetailsComponent } from './components/di-pre-treat-UCDetails/use-case-details.component';
 
 
 
@@ -19,6 +21,17 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
+    path: 'DiPreTreatUCChoice',
+    // canActivate: [AuthGuard],
+    component: GridListUCComponent,
+  },
+
+  {
+    path: 'UseCaseDetails',
+    component: UseCaseDetailsComponent,
+  },
+
+  {
     path: 'DiPreTreatHome',
     // canActivate: [AuthGuard],
     component: DiPreTreatMenuComponent
@@ -28,9 +41,9 @@ const routes: Routes = [
     component: DiPreTreatPremiseComponent
   },
   {
-  path: 'map',
-  component: DiPreTreatMapComponent
-},
+    path: 'map',
+    component: DiPreTreatMapComponent
+  },
   {
     path: 'logged',
     children: [
@@ -56,4 +69,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

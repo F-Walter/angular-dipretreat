@@ -60,15 +60,17 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 // import {MatSnackBarModule} from '@angular/material/snack-bar';
 // import {MatSortModule} from '@angular/material/sort';
 // import {MatTableModule} from '@angular/material/table';
-// import {MatTabsModule} from '@angular/material/tabs';
+import {MatTabsModule} from '@angular/material/tabs';
 import { MatTreeModule } from '@angular/material/tree';
 import { DiPreTreatPremiseComponent } from './components/di-pre-treat-premise/di-pre-treat-premise.component';
 import { DipretreatToolbarComponent } from './components/di-pre-treat-toolbar/dipretreat-toolbar.component';
 import { DiPreTreatMapComponent } from './components/di-pre-treat-map/di-pre-treat-map.component';
 
 
-import {MatSlideToggleModule} from '@angular/material/slide-toggle'; 
-
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { GridListUCComponent } from './components/di-pre-treat-grid-list/grid-list-uc.component'; 
+import {MatGridListModule} from '@angular/material/grid-list';
+import { UseCaseDetailsComponent } from './components/di-pre-treat-UCDetails/use-case-details.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +83,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     DipretreatToolbarComponent,
     // CountryFlagDirective,
     DiPreTreatMapComponent,
+    GridListUCComponent,
+    UseCaseDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -103,6 +107,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSlideToggleModule,
+    MatGridListModule,
     
     
 
@@ -144,7 +149,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     // MatSnackBarModule,
     // MatSortModule,
     // MatTableModule,
-    // MatTabsModule,
+    MatTabsModule,
     // MatToolbarModule,
     // MatTooltipModule,
     // MatTreeModule,
