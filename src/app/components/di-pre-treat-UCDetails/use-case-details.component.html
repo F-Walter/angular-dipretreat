@@ -13,19 +13,23 @@
 
             <!-- Position Column -->
             <ng-container matColumnDef="state">
-                <th mat-header-cell *matHeaderCellDef> STATO </th>
-                <td mat-cell *matCellDef="let element"> {{element.state}} </td>
+                <th mat-header-cell *matHeaderCellDef style="width: 5%;"> STATO </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-icon aria-hidden="false" aria-label="Example home icon" color="primary">check_circle</mat-icon>
+                     <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" >cancel</mat-icon>  -->
+                    <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" color="error">warning</mat-icon>  -->
+                </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="item">
-                <th mat-header-cell *matHeaderCellDef> Componente </th>
-                <td mat-cell *matCellDef="let element"> {{element.item}} </td>
+                <th mat-header-cell *matHeaderCellDef style="width: 10%;"> Componente </th>
+                <td mat-cell *matCellDef="let element"> <b> {{element.item | uppercase }} </b></td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="hour">
-                <th mat-header-cell *matHeaderCellDef> Ora </th>
+                <th mat-header-cell *matHeaderCellDef style="width: 7%;"> Ora </th>
                 <td mat-cell *matCellDef="let element"> {{element.hour}} </td>
             </ng-container>
 

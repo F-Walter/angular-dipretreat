@@ -59,7 +59,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 // import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 // import {MatSnackBarModule} from '@angular/material/snack-bar';
 // import {MatSortModule} from '@angular/material/sort';
-// import {MatTableModule} from '@angular/material/table';
+import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
 import { MatTreeModule } from '@angular/material/tree';
 import { DiPreTreatPremiseComponent } from './components/di-pre-treat-premise/di-pre-treat-premise.component';
@@ -108,7 +108,9 @@ import { UseCaseDetailsComponent } from './components/di-pre-treat-UCDetails/use
     MatNativeDateModule,
     MatSlideToggleModule,
     MatGridListModule,
-    
+    MatTableModule,
+    MatTabsModule,
+
     
 
     /////////////////////////
@@ -149,7 +151,6 @@ import { UseCaseDetailsComponent } from './components/di-pre-treat-UCDetails/use
     // MatSnackBarModule,
     // MatSortModule,
     // MatTableModule,
-    MatTabsModule,
     // MatToolbarModule,
     // MatTooltipModule,
     // MatTreeModule,
