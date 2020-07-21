@@ -42,12 +42,13 @@ img {
     flex-direction: row;
     align-items: center;
     margin-left: 2%;
-    margin-right: 4%;
+    margin-right: 6%;
   }
   .title{
     font-weight: bold;
   }
   #infoPremise{
+    z-index: 2;
     margin-top: 2%;
     margin-left: 2%;
   }

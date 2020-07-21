@@ -109,7 +109,7 @@ export class DiPreTreatPremiseComponent implements OnInit {
                 this.premise_geom = "Lat " + premise.premises_geom.x + " - Lng " + premise.premises_geom.y;
               if (premise.last_maintanance)
                 this.last_maintanance = premise.last_maintanance;
-              if (premise.corrosion_level)
+              if (premise.corrosion_level==0 || premise.corrosion_level)
                 this.corrosion_level = premise.corrosion_level;
               if (premise.last_inspection)
                 this.last_inspection = premise.last_inspection;
