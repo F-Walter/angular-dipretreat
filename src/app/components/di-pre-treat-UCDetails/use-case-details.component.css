@@ -1,3 +1,17 @@
 .mat-table{
     width: 100%;
 }
+
+td {
+    height: 50px;
+    vertical-align: center;
+  }
+
+  mat-accordion{
+    height: 2%;
+    width: 80%;
+  }
+
+  #risolviButton{
+    text-align: center;
+  }

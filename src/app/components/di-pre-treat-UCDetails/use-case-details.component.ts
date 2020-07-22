@@ -22,9 +22,10 @@ const ELEMENT_DATA = [
 })
 export class UseCaseDetailsComponent implements OnInit {
 
-  displayedColumns: string[] = ['state', 'item','hour', 'problem'];
+  displayedColumns: string[] = ['state', 'item','hour', 'problem','button'];
   dataSource = ELEMENT_DATA;
 
+  panelOpenState:boolean
   constructor() { }
 
   ngOnInit(): void {

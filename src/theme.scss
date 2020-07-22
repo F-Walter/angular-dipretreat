@@ -25,8 +25,7 @@ $custom: map-get($my-app-theme, custom);
 
 
 .mat-success {
-    background-color: mat-color($custom, success);
-    color: mat-color($custom, success-contrast);
+    color: mat-color($custom, success);
   }
 
 @include angular-material-theme($my-app-theme);

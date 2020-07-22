@@ -72,6 +72,8 @@ import { GridListUCComponent } from './components/di-pre-treat-grid-list/grid-li
 import {MatGridListModule} from '@angular/material/grid-list';
 import { UseCaseDetailsComponent } from './components/di-pre-treat-UCDetails/use-case-details.component';
 
+
+import {MatExpansionModule} from '@angular/material/expansion'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -110,6 +112,7 @@ import { UseCaseDetailsComponent } from './components/di-pre-treat-UCDetails/use
     MatGridListModule,
     MatTableModule,
     MatTabsModule,
+    MatExpansionModule
 
     
 
