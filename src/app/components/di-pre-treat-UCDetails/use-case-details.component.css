@@ -52,6 +52,7 @@ td {
   .example-element-detail {
     overflow: hidden;
     display: flex;
+    height: max-content;
   }
   
   .example-element-diagram {
@@ -87,3 +88,18 @@ td {
        Every toolbar row uses a flexbox row layout. */
     flex: 1 1 auto;
   }
+
+  #listImages{
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+    overflow: auto;
+    max-width: 50%;
+    height: 500px;
+  }
+/* 
+  img{   
+     width: 50px;
+     height: 50px;
+ 
+  } */

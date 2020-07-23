@@ -20,9 +20,11 @@
                         <mat-icon *ngSwitchCase="1" aria-hidden="false" aria-label="Example home icon" color="error">
                             warning
                         </mat-icon>
-                        <mat-icon *ngSwitchCase="2" aria-hidden="false" aria-label="Example home icon" color="inactive">cancel
+                        <mat-icon *ngSwitchCase="2" aria-hidden="false" aria-label="Example home icon" color="inactive">
+                            cancel
                         </mat-icon>
-                        <mat-icon *ngSwitchCase="3" aria-hidden="false" aria-label="Example home icon" color="looping">loop
+                        <mat-icon *ngSwitchCase="3" aria-hidden="false" aria-label="Example home icon" color="looping">
+                            loop
                         </mat-icon>
 
 
@@ -49,19 +51,21 @@
             <!-- Problems Column -->
             <ng-container matColumnDef="problemsFound">
                 <th mat-header-cell *matHeaderCellDef style="width: 25%;"> Problemi Rilevati </th>
-                <td mat-cell *matCellDef="let element" [style]="element.state!=0?'color:red':'' "> {{element.problemsFound}}</td>
+                <td mat-cell *matCellDef="let element" [style]="element.state!=0?'color:red':'' ">
+                    {{element.problemsFound}}</td>
             </ng-container>
 
             <!-- Solve Button Column -->
             <ng-container matColumnDef="button">
                 <th mat-header-cell *matHeaderCellDef style="width: 7%;"> </th>
-                <td mat-cell *matCellDef="let element"><button *ngIf = "element.state==1" name="risolvi" mat-raised-button color="primary" (click) = "solve(element)">RISOLVI</button>
+                <td mat-cell *matCellDef="let element"><button *ngIf="element.state==1" name="risolvi" mat-raised-button
+                        color="primary" (click)="solve(element)">RISOLVI</button>
                 </td>
             </ng-container>
 
 
 
-         
+
 
             <!-- <button mat-raised-button color="primary">RISOLVI</button> -->
 
@@ -71,17 +75,47 @@
                 <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
                     <div class="example-element-detail"
                         [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                        <div class="example-element-diagram">
-                            <div class="example-element-state"> {{element.state}} </div>
-                            <div class="example-element-id"> <b>{{element.id}}</b> </div>
-                            <div class="example-element-hour"> {{element.hour}} </div>
-                            <!-- TODO: to be moved to different location in order to be visible-->
-                            <div class="example-element-problemsFound"> {{element.problemsFound}} </div>
-                        </div>
-                        <div class="example-element-description">
+
+
+                        <!-- <div class="example-element-description">
                             {{element.description}}
                             <span class="example-element-description-attribution"> -- Wikipedia </span>
-                        </div>
+                        </div> -->
+                        <mat-list id="listImages">
+                            <mat-list-item><img mat-card-image src="../../../assets/black.jpeg" alt="Photo of a Shiba Inu"> </mat-list-item>
+                            <mat-list-item> Salt </mat-list-item>
+                            <mat-list-item> Paprika </mat-list-item>
+                            <mat-list-item> Pepper </mat-list-item>
+                            <mat-list-item> Salt </mat-list-item>
+                            <mat-list-item> Paprika </mat-list-item>
+                            <mat-list-item> Pepper </mat-list-item>
+                            <mat-list-item> Salt </mat-list-item>
+                            <mat-list-item> Paprika </mat-list-item>
+                            <mat-list-item> Pepper </mat-list-item>
+                            <mat-list-item> Salt </mat-list-item>
+                            <mat-list-item> Paprika </mat-list-item>
+                            <mat-list-item> Pepper </mat-list-item>
+                            <mat-list-item> Salt </mat-list-item>
+                            <mat-list-item> Paprika </mat-list-item>
+                            <mat-list-item> Pepper </mat-list-item>
+                            <mat-list-item> Salt </mat-list-item>
+                            <mat-list-item> Paprika </mat-list-item>
+                            <mat-list-item> Pepper </mat-list-item>
+                            <mat-list-item> Salt </mat-list-item>
+                            <mat-list-item> Paprika </mat-list-item>
+                            <mat-list-item> Pepper </mat-list-item>
+                            <mat-list-item> Salt </mat-list-item>
+                            <mat-list-item> Paprika </mat-list-item>
+                            <mat-list-item> Pepper </mat-list-item>
+                            <mat-list-item> Salt </mat-list-item>
+                            <mat-list-item> Paprika </mat-list-item>
+                            <mat-list-item> Pepper </mat-list-item>
+                            <mat-list-item> Salt </mat-list-item>
+                            <mat-list-item> Paprika </mat-list-item>
+                            <mat-list-item> Pepper </mat-list-item>
+                            <mat-list-item> Salt </mat-list-item>
+                            <mat-list-item> Paprika </mat-list-item>
+                        </mat-list>
                     </div>
                 </td>
             </ng-container>
