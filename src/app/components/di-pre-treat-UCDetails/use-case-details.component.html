@@ -81,41 +81,11 @@
                             {{element.description}}
                             <span class="example-element-description-attribution"> -- Wikipedia </span>
                         </div> -->
-                        <mat-list id="listImages">
-                            <mat-list-item><img mat-card-image src="../../../assets/black.jpeg" alt="Photo of a Shiba Inu"> </mat-list-item>
-                            <mat-list-item> Salt </mat-list-item>
-                            <mat-list-item> Paprika </mat-list-item>
-                            <mat-list-item> Pepper </mat-list-item>
-                            <mat-list-item> Salt </mat-list-item>
-                            <mat-list-item> Paprika </mat-list-item>
-                            <mat-list-item> Pepper </mat-list-item>
-                            <mat-list-item> Salt </mat-list-item>
-                            <mat-list-item> Paprika </mat-list-item>
-                            <mat-list-item> Pepper </mat-list-item>
-                            <mat-list-item> Salt </mat-list-item>
-                            <mat-list-item> Paprika </mat-list-item>
-                            <mat-list-item> Pepper </mat-list-item>
-                            <mat-list-item> Salt </mat-list-item>
-                            <mat-list-item> Paprika </mat-list-item>
-                            <mat-list-item> Pepper </mat-list-item>
-                            <mat-list-item> Salt </mat-list-item>
-                            <mat-list-item> Paprika </mat-list-item>
-                            <mat-list-item> Pepper </mat-list-item>
-                            <mat-list-item> Salt </mat-list-item>
-                            <mat-list-item> Paprika </mat-list-item>
-                            <mat-list-item> Pepper </mat-list-item>
-                            <mat-list-item> Salt </mat-list-item>
-                            <mat-list-item> Paprika </mat-list-item>
-                            <mat-list-item> Pepper </mat-list-item>
-                            <mat-list-item> Salt </mat-list-item>
-                            <mat-list-item> Paprika </mat-list-item>
-                            <mat-list-item> Pepper </mat-list-item>
-                            <mat-list-item> Salt </mat-list-item>
-                            <mat-list-item> Paprika </mat-list-item>
-                            <mat-list-item> Pepper </mat-list-item>
-                            <mat-list-item> Salt </mat-list-item>
-                            <mat-list-item> Paprika </mat-list-item>
-                        </mat-list>
+                        <mat-grid-list cols="4" rowHeight="2:1">
+                            <mat-grid-tile *ngFor="let i of images">
+                              <img src="../../../assets/black.jpeg"/>
+                            </mat-grid-tile>
+                          </mat-grid-list>
                     </div>
                 </td>
             </ng-container>

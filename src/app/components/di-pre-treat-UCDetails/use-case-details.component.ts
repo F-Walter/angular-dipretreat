@@ -13,6 +13,13 @@ export interface Item {
   button: string;
 }
 
+export interface Tile {
+  color: string;
+  cols: number;
+  rows: number;
+  text: string;
+}
+
 @Component({
   selector: 'app-use-case-details',
   templateUrl: './use-case-details.component.html',
@@ -29,6 +36,8 @@ export class UseCaseDetailsComponent {
   dataSource = ELEMENT_DATA;
   columnsToDisplay = ['state', 'id', 'hour', 'problemsFound', 'button'];
   expandedElement: Item | null;
+
+  images=[1, 2, 3]
 
   headerOfColumn(column: string) {
     switch (column) {
