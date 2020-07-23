@@ -6,26 +6,34 @@
 
 <mat-tab-group>
     <mat-tab label="AGV-1">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-            <!--- Note that these columns can be defined in any order.
-                  The actual rendered columns are set as a property on the row definition" -->
-
+        <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
             <!-- State Column -->
             <ng-container matColumnDef="state">
                 <th mat-header-cell *matHeaderCellDef style="width: 5%;"> STATO </th>
                 <td mat-cell *matCellDef="let element">
-                    <mat-icon aria-hidden="false" aria-label="Example home icon" color="success">check_circle_outline
-                    </mat-icon>
-                    <!-- <mat-icon aria-hidden="false" aria-label="Example home icon">cancel</mat-icon>  -->
-                    <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" color="error">warning</mat-icon> -->
+                    <div [ngSwitch]="element.state">
+                        <mat-icon *ngSwitchCase="0" aria-hidden="false" aria-label="Example home icon" color="success">
+                            check_circle_outline
+                        </mat-icon>
+                        <mat-icon *ngSwitchCase="2" aria-hidden="false" aria-label="Example home icon">cancel
+                        </mat-icon>
+
+                        <mat-icon *ngSwitchCase="1" aria-hidden="false" aria-label="Example home icon" color="error">
+                            warning
+                        </mat-icon>
+                        <div *ngSwitchDefault>
+                            <h1>Switch</h1>
+                            <p>Select topic from the dropdown, to switch the content of this DIV.</p>
+                        </div>
+                    </div>
                 </td>
             </ng-container>
 
-            <!-- Item Column -->
-            <ng-container matColumnDef="item">
+            <!-- Id Column -->
+            <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef style="width: 10%;"> Componente </th>
-                <td mat-cell *matCellDef="let element"> <b> {{element.item | uppercase }} </b></td>
+                <td mat-cell *matCellDef="let element"> <b> {{element.id | uppercase }} </b></td>
             </ng-container>
 
             <!-- Hour Column -->
@@ -34,38 +42,103 @@
                 <td mat-cell *matCellDef="let element"> {{element.hour}} </td>
             </ng-container>
 
-            <!-- Problem Column -->
-            <ng-container matColumnDef="problem">
+
+            <ng-container matColumnDef="problemsFound">
                 <th mat-header-cell *matHeaderCellDef style="width: 25%;"> Problemi Rilevati </th>
-                <td mat-cell *matCellDef="let element"> {{element.problem}}
-                    <div *ngIf="element.problem != ''; then thenBlock else elseBlock"></div>
+                <td mat-cell *matCellDef="let element"> {{element.problemsFound}}
+                    <div *ngIf="element.problemsFound != ''; then thenBlock else elseBlock"></div>
                     <ng-template #thenBlock>
-                        <br>
-                        <mat-accordion>
-                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                                <mat-expansion-panel-header>
-                                    Visualizza dettagli <span class="fillSpace"></span> <button mat-raised-button color="primary">RISOLVI</button>
-                                </mat-expansion-panel-header>
-                                <p>I'm visible because I am open</p>
-                                
-                            </mat-expansion-panel>
-                        </mat-accordion>
+                        <span > Visualizza dettagli -</span>  
+                        <span class="example-fill-remaining-space"></span>
+                        <button name="risolvi" mat-raised-button color="primary">RISOLVI</button>
                     </ng-template>
                     <ng-template #elseBlock></ng-template>
                 </td>
             </ng-container>
 
-            <ng-container matColumnDef="button">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td id="risolviButton" mat-cell *matCellDef="let element"> </td>
+
+
+         
+
+            <!-- <button mat-raised-button color="primary">RISOLVI</button> -->
+
+
+            <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+            <ng-container matColumnDef="expandedDetail">
+                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                    <div class="example-element-detail"
+                        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                        <div class="example-element-diagram">
+                            <div class="example-element-state"> {{element.state}} </div>
+                            <div class="example-element-id"> <b>{{element.id}}</b> </div>
+                            <div class="example-element-hour"> {{element.hour}} </div>
+                            <div class="example-element-problemsFound"> {{element.problemsFound}} </div>
+                        </div>
+                        <div class="example-element-description">
+                            {{element.description}}
+                            <span class="example-element-description-attribution"> -- Wikipedia </span>
+                        </div>
+                    </div>
+                </td>
             </ng-container>
 
-
-
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+                [class.example-expanded-row]="expandedElement === element"
+                (click)="expandedElement = expandedElement === element ? null : element">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
         </table>
+
+
+
+
+
+        <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" color="success">check_circle_outline</mat-icon> -->
+        <!-- <mat-icon aria-hidden="false" aria-label="Example home icon">cancel</mat-icon>  -->
+        <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" color="error">warning</mat-icon> -->
+        <!-- -->
+
+
+
+
+
+        <!-- 
+        <table mat-table
+       [dataSource]="dataSource" multiTemplateDataRows
+       class="mat-elevation-z8">
+  <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+      <div class="example-element-detail"
+           [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+        <div class="example-element-diagram">
+          <div class="example-element-position"> {{element.position}} </div>
+          <div class="example-element-symbol"> {{element.symbol}} </div>
+          <div class="example-element-name"> {{element.name}} </div>
+          <div class="example-element-weight"> {{element.weight}} </div>
+        </div>
+        <div class="example-element-description">
+          {{element.description}}
+          <span class="example-element-description-attribution"> -- Wikipedia </span>
+        </div>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+      class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element">
+  </tr>
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+</table> -->
+
 
 
     </mat-tab>
