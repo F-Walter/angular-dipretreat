@@ -5,7 +5,9 @@
 $custom-collection: (
     warning :  #FFC116,
     success :  #2dce1ff1,
+    looping: #FFC116,
     danger:    #c00000,
+    inactive: #949494,
     contrast: (
         warning :  #000000,
         success :  #FFFFFF,
@@ -26,7 +28,13 @@ $custom: map-get($my-app-theme, custom);
 
 .mat-success {
     color: mat-color($custom, success);
-  }
+}
+.mat-looping {
+    color: mat-color($custom, looping);
+}
+.mat-inactive {
+    color: mat-color($custom, inactive);
+}
 
 @include angular-material-theme($my-app-theme);
 

@@ -13,14 +13,16 @@
                 <th mat-header-cell *matHeaderCellDef style="width: 5%;"> STATO </th>
                 <td mat-cell *matCellDef="let element">
                     <div [ngSwitch]="element.state">
-                        <!-- 0: ok, 1: warning , 2: not yet considered -->
+                        <!-- 0: ok or problem solved, 1: warning , 2: not yet considered, 3: loading-->
                         <mat-icon *ngSwitchCase="0" aria-hidden="false" aria-label="Example home icon" color="success">
                             check_circle
                         </mat-icon>
                         <mat-icon *ngSwitchCase="1" aria-hidden="false" aria-label="Example home icon" color="error">
                             warning
                         </mat-icon>
-                        <mat-icon *ngSwitchCase="2" aria-hidden="false" aria-label="Example home icon">cancel
+                        <mat-icon *ngSwitchCase="2" aria-hidden="false" aria-label="Example home icon" color="inactive">cancel
+                        </mat-icon>
+                        <mat-icon *ngSwitchCase="3" aria-hidden="false" aria-label="Example home icon" color="looping">loop
                         </mat-icon>
 
 
@@ -47,7 +49,7 @@
             <!-- Problems Column -->
             <ng-container matColumnDef="problemsFound">
                 <th mat-header-cell *matHeaderCellDef style="width: 25%;"> Problemi Rilevati </th>
-                <td mat-cell *matCellDef="let element" [style]="element.state!=0?'color:orange':''"> {{element.problemsFound}}</td>
+                <td mat-cell *matCellDef="let element" [style]="element.state!=0?'color:red':'' "> {{element.problemsFound}}</td>
             </ng-container>
 
             <!-- Solve Button Column -->

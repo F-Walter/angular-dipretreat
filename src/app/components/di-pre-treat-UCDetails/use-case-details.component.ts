@@ -5,7 +5,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 //For now values in the db are provided statically, later will be provided from a service
 
 export interface Item {
-  state: number; // 0 nessun problema or problema risolto // 1 problema // 2 componente non ancora considerato
+  state: number; // 0 nessun problema or problema risolto // 1 problema // 2 componente non ancora considerato //3 loading
   id: string;
   hour: string;
   problemsFound: string;
@@ -115,10 +115,10 @@ const ELEMENT_DATA: Item[] = [
          the chalcogen group on the periodic table, a highly reactive nonmetal, and an oxidizing
          agent that readily forms oxides with most elements as well as with other compounds.`
   }, {
-    state: 1,
+    state: 3,
     id: 'Helium',
     hour: '4.0026',
-    problemsFound: 'Tipologia Errore',
+    problemsFound: '',
     button:'',
     description: `Helium is a chemical element with problemsFound He and atomic number 2. It is a
         colorless, odorless, tasteless, non-toxic, inert, monatomic gas, the first in the noble gas
