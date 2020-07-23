@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { MatDialog } from '@angular/material/dialog';
+import { ProblemModalComponent } from './modal/problem-modal.component';
 
 
 //For now values in the db are provided statically, later will be provided from a service
@@ -13,12 +15,6 @@ export interface Item {
   button: string;
 }
 
-export interface Tile {
-  color: string;
-  cols: number;
-  rows: number;
-  text: string;
-}
 
 @Component({
   selector: 'app-use-case-details',
@@ -36,8 +32,10 @@ export class UseCaseDetailsComponent {
   dataSource = ELEMENT_DATA;
   columnsToDisplay = ['state', 'id', 'hour', 'problemsFound', 'button'];
   expandedElement: Item | null;
+ 
 
-  images=[1, 2, 3]
+  constructor(public dialog: MatDialog){}
+
 
   headerOfColumn(column: string) {
     switch (column) {
@@ -57,7 +55,7 @@ export class UseCaseDetailsComponent {
 
   solve(element: Item){
     event.stopPropagation();
-    console.log(element)
+    this.dialog.open(ProblemModalComponent);
   }
 }
 

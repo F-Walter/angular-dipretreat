@@ -93,15 +93,17 @@ td {
   #listImages{
     display: flex;
     flex-direction: row;
+    justify-items: center;
     overflow: auto;
     max-width: 80vh;
     height: 40vh;
 } 
 img{   
-    width: 30vh;
-    height: 100%;
+    width: 25vh;
+    height: 25vh;
 }
-.mat-list-item.mat-list-item-content{
-    height:100vh;
+#listImages .mat-list-item {
+  height: auto;
 }
+
 

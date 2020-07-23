@@ -53,7 +53,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 // import {MatPaginatorModule} from '@angular/material/paginator';
 // import {MatProgressBarModule} from '@angular/material/progress-bar';
 // import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-// import {MatRadioModule} from '@angular/material/radio';
+import {MatRadioModule} from '@angular/material/radio';
 
 // import {MatSliderModule} from '@angular/material/slider';
 // import {MatSlideToggleModule} from '@angular/material/slide-toggle';
@@ -73,7 +73,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { UseCaseDetailsComponent } from './components/di-pre-treat-UCDetails/use-case-details.component';
 
 
-import {MatExpansionModule} from '@angular/material/expansion'; 
+import {MatExpansionModule} from '@angular/material/expansion';
+import { ProblemModalComponent } from './components/di-pre-treat-UCDetails/modal/problem-modal.component'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -87,6 +88,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     DiPreTreatMapComponent,
     GridListUCComponent,
     UseCaseDetailsComponent,
+    ProblemModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -112,7 +114,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatGridListModule,
     MatTableModule,
     MatTabsModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatRadioModule,
 
     
 
@@ -145,7 +148,6 @@ import {MatExpansionModule} from '@angular/material/expansion';
     // MatPaginatorModule,
     // MatProgressBarModule,
     // MatProgressSpinnerModule,
-    // MatRadioModule,
     // MatRippleModule,
     // MatSelectModule,
     // MatSidenavModule,
