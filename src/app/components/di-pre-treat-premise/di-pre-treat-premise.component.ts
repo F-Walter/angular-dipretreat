@@ -91,11 +91,23 @@ export class DiPreTreatPremiseComponent implements OnInit {
         if (param['endDate'])
           this.endDateSelected = param['endDate']
         else
-          this.endDateSelected = "2020-04-09"
+          this.endDateSelected = "2020-07-29"
 
         let arrayData: Sensor[] = []
         // console.log(param['premiseId'])
-
+        this.premiseData$ = this.premiseService.getPremiseData(this.premiseId, this.startDateSelected, this.endDateSelected) // per adesso il premiseName non è usato perchè abbiamo un API di default
+          .pipe(
+            map(data => {
+              let premiseData = Object.values(data)
+              for (let index = 0; index < premiseData.length; index++) {
+                for (let i = 0; i < premiseData.length; i++) {
+                  arrayData.push(new Sensor(premiseData[i]))
+                }
+              }
+              return arrayData
+            }),
+            catchError(_ => of([]))
+          )
 
         this.premiseService.getAllPremises().subscribe((e) => {
           let element: any = e;
@@ -117,230 +129,224 @@ export class DiPreTreatPremiseComponent implements OnInit {
                 this.creation_year = premise.creation_year.substring(0, 10);
             }
           });
-        })
+
+          this.premiseData$.subscribe((arrayData: Sensor[]) => {
+
+            // arrayData = arrayData.slice(0, 10000)  //se si vuole limitare i dati
+            // console.log(arrayData)
+            let phArray = []
+            let humidityArray = []
+            let temperatureArray = []
+            let windSpeedArray = []
+            let pressureArray = []
+            let y;
+            let x;
+
+            for (let i = 0; i < arrayData.length; i++) {
 
 
-        this.premiseData$ = this.premiseService.getPremiseData(this.premiseId, this.startDateSelected, this.endDateSelected) // per adesso il premiseName non è usato perchè abbiamo un API di default
-          .pipe(
-            map(data => {
-              let premiseData = Object.values(data)
-              for (let index = 0; index < premiseData.length; index++) {
-                for (let i = 0; i < premiseData.length; i++) {
-                  arrayData.push(new Sensor(premiseData[i]))
-                }
+              y = arrayData[i].sensor_data;
+
+              x = new Date(arrayData[i].sensor_timestamp);
+
+              let p: Point = new Point(x, y)
+
+              switch (arrayData[i].sensor_description) {
+                case 'pH':
+                  if (!phArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
+                    phArray.push(p)
+                  break;
+                case 'humidity':
+                  if (!humidityArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
+                    humidityArray.push(p)
+                  break;
+                case "temperature":
+                  if (!temperatureArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
+                    temperatureArray.push(p)
+                  break;
+                case 'wind speed':
+                  if (!windSpeedArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
+                    windSpeedArray.push(p)
+                  break;
+
+                case 'ext pressure':
+                  if (!pressureArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
+                    pressureArray.push(p)
+                  break;
+
+                default:
+                  break;
               }
-              return arrayData
-            }),
-            catchError(_ => of([]))
-          )
 
-
-        this.premiseData$.subscribe((arrayData: Sensor[]) => {
-
-          // arrayData = arrayData.slice(0, 10000)  //se si vuole limitare i dati
-          // console.log(arrayData)
-          let phArray = []
-          let humidityArray = []
-          let temperatureArray = []
-          let windSpeedArray = []
-          let pressureArray = []
-          let y;
-          let x;
-
-          for (let i = 0; i < arrayData.length; i++) {
-
-
-            y = arrayData[i].sensor_data;
-
-            x = new Date(arrayData[i].sensor_timestamp);
-
-            let p: Point = new Point(x, y)
-
-            switch (arrayData[i].sensor_description) {
-              case 'pH':
-                if (!phArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
-                  phArray.push(p)
-                break;
-              case 'humidity':
-                if (!humidityArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
-                  humidityArray.push(p)
-                break;
-              case "temperature":
-                if (!temperatureArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
-                  temperatureArray.push(p)
-                break;
-              case 'wind speed':
-                if (!windSpeedArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
-                  windSpeedArray.push(p)
-                break;
-
-              case 'ext pressure':
-                if (!pressureArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
-                  pressureArray.push(p)
-                break;
-
-              default:
-                break;
             }
 
-          }
+            // console.log(arrayData.length)
+            // console.log(humidityArray.length)
+            // console.log(temperatureArray.length)
+            // console.log(phArray.length)
 
-          // console.log(arrayData.length)
-          // console.log(humidityArray.length)
-          // console.log(temperatureArray.length)
-          // console.log(phArray.length)
+            //   console.log(temperatureArray)
 
-          //   console.log(temperatureArray)
+            //Sort all arrays
+            humidityArray = humidityArray.sort((x1, x2) => {
+              return x1.x.getTime() - x2.x.getTime()
+            })
 
-          //Sort all arrays
-          humidityArray = humidityArray.sort((x1, x2) => {
-            return x1.x.getTime() - x2.x.getTime()
+            temperatureArray = temperatureArray.sort((x1, x2) => {
+              return x1.x.getTime() - x2.x.getTime()
+            })
+
+            phArray = phArray.sort((x1, x2) => {
+              return x1.x.getTime() - x2.x.getTime()
+            })
+
+            windSpeedArray = windSpeedArray.sort((x1, x2) => {
+              return x1.x.getTime() - x2.x.getTime()
+            })
+
+
+            pressureArray = pressureArray.sort((x1, x2) => {
+              return x1.x.getTime() - x2.x.getTime()
+            })
+
+
+
+            var chartHumityTemperature = new CanvasJS.Chart("chartContainer", {
+              zoomEnabled: true,
+              animationEnabled: true,
+              exportEnabled: true,
+              title: {
+                text: this.premise_name
+              },
+              subtitles: [{
+                text: "Try Zooming and Panning"
+              }],
+              axisY: {
+                title: "Humidity[%]",
+              },
+              axisY2: {
+                title: "Temperature[C]", //TODO: definire unità 
+              },
+              legend: {
+                cursor: "pointer",
+                verticalAlign: "top",
+                horizontalAlign: "center",
+                dockInsidePlotArea: true,
+              },
+              toolTip: {
+                shared: true
+              },
+              data: [
+                {
+                  type: "line",
+                  name: "Humidity",
+                  axisYType: "primary",
+                  showInLegend: true,
+                  dataPoints: humidityArray
+                },
+                {
+                  type: "line",
+                  name: "Temperature",
+                  axisYType: "secondary",
+                  showInLegend: true,
+                  dataPoints: temperatureArray
+                },
+              ]
+            });
+
+            var chartPH = new CanvasJS.Chart("chartContainerPH", {
+              zoomEnabled: true,
+              animationEnabled: true,
+              exportEnabled: true,
+              title: {
+                text: "PH"
+              },
+              subtitles: [{
+                text: "Try Zooming and Panning"
+              }],
+              axisY: {
+                title: "PH[%]",
+              },
+              legend: {
+                cursor: "pointer",
+                verticalAlign: "top",
+                horizontalAlign: "center",
+                dockInsidePlotArea: true,
+              },
+              data: [
+                {
+                  type: "line",
+                  name: "PH",
+                  axisYType: "primary",
+                  showInLegend: true,
+                  dataPoints: phArray
+                },
+
+              ]
+            });
+
+
+            var chartWindSpeed = new CanvasJS.Chart("chartContainerWindSpeed", {
+              zoomEnabled: true,
+              animationEnabled: true,
+              exportEnabled: true,
+              title: {
+                text: "Wind Speed"
+              },
+              subtitles: [{
+                text: "Try Zooming and Panning"
+              }],
+              axisY: {
+                title: "WindSpeed[%]",
+              },
+              axisY2: {
+                title: "Pressure[%]",
+              },
+              legend: {
+                cursor: "pointer",
+                verticalAlign: "top",
+                horizontalAlign: "center",
+                dockInsidePlotArea: true,
+              },
+              toolTip: {
+                shared: true
+              },
+              data: [
+                {
+                  type: "line",
+                  name: "WindSpeed",
+                  axisYType: "primary",
+                  showInLegend: true,
+                  dataPoints: windSpeedArray
+                },
+                {
+                  type: "line",
+                  name: "Pressure",
+                  axisYType: "secondary",
+                  showInLegend: true,
+                  dataPoints: pressureArray
+                },
+
+
+              ]
+            });
+
+
+            chartHumityTemperature.render();
+            chartPH.render();
+            chartWindSpeed.render();
           })
 
-          temperatureArray = temperatureArray.sort((x1, x2) => {
-            return x1.x.getTime() - x2.x.getTime()
-          })
-
-          phArray = phArray.sort((x1, x2) => {
-            return x1.x.getTime() - x2.x.getTime()
-          })
-
-          windSpeedArray = windSpeedArray.sort((x1, x2) => {
-            return x1.x.getTime() - x2.x.getTime()
-          })
-
-
-          pressureArray = pressureArray.sort((x1, x2) => {
-            return x1.x.getTime() - x2.x.getTime()
-          })
 
 
 
-          var chartHumityTemperature = new CanvasJS.Chart("chartContainer", {
-            zoomEnabled: true,
-            animationEnabled: true,
-            exportEnabled: true,
-            title: {
-              text: "Ponte Torino"
-            },
-            subtitles: [{
-              text: "Try Zooming and Panning"
-            }],
-            axisY: {
-              title: "Humidity[%]",
-            },
-            axisY2: {
-              title: "Temperature[C]", //TODO: definire unità 
-            },
-            legend: {
-              cursor: "pointer",
-              verticalAlign: "top",
-              horizontalAlign: "center",
-              dockInsidePlotArea: true,
-            },
-            toolTip: {
-              shared: true
-            },
-            data: [
-              {
-                type: "line",
-                name: "Humidity",
-                axisYType: "primary",
-                showInLegend: true,
-                dataPoints: humidityArray
-              },
-              {
-                type: "line",
-                name: "Temperature",
-                axisYType: "secondary",
-                showInLegend: true,
-                dataPoints: temperatureArray
-              },
-            ]
-          });
 
-          var chartPH = new CanvasJS.Chart("chartContainerPH", {
-            zoomEnabled: true,
-            animationEnabled: true,
-            exportEnabled: true,
-            title: {
-              text: "PH"
-            },
-            subtitles: [{
-              text: "Try Zooming and Panning"
-            }],
-            axisY: {
-              title: "PH[%]",
-            },
-            legend: {
-              cursor: "pointer",
-              verticalAlign: "top",
-              horizontalAlign: "center",
-              dockInsidePlotArea: true,
-            },
-            data: [
-              {
-                type: "line",
-                name: "PH",
-                axisYType: "primary",
-                showInLegend: true,
-                dataPoints: phArray
-              },
-
-            ]
-          });
-
-
-          var chartWindSpeed = new CanvasJS.Chart("chartContainerWindSpeed", {
-            zoomEnabled: true,
-            animationEnabled: true,
-            exportEnabled: true,
-            title: {
-              text: "Wind Speed"
-            },
-            subtitles: [{
-              text: "Try Zooming and Panning"
-            }],
-            axisY: {
-              title: "WindSpeed[%]",
-            }, 
-            axisY2: {
-              title: "Pressure[%]", 
-            },
-            legend: {
-              cursor: "pointer",
-              verticalAlign: "top",
-              horizontalAlign: "center",
-              dockInsidePlotArea: true,
-            },
-            toolTip: {
-              shared: true
-            },
-            data: [
-              {
-                type: "line",
-                name: "WindSpeed",
-                axisYType: "primary",
-                showInLegend: true,
-                dataPoints: windSpeedArray
-              },
-              {
-                type: "line",
-                name: "Pressure",
-                axisYType: "secondary",
-                showInLegend: true,
-                dataPoints: pressureArray
-              },
-
-
-            ]
-          });
-
-
-          chartHumityTemperature.render();
-          chartPH.render();
-          chartWindSpeed.render();
         })
+
+
+
+
+
       }
     })
   }
