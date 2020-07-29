@@ -71,7 +71,7 @@ export class DiPreTreatPremiseComponent implements OnInit {
   }
 
   //TODO: integration with other company
-  submitCorrosionForcast(){
+  submitCorrosionForcast() {
     console.log("Corrosion Forecast");
 
   }
@@ -109,7 +109,7 @@ export class DiPreTreatPremiseComponent implements OnInit {
                 this.premise_geom = "Lat " + premise.premises_geom.x + " - Lng " + premise.premises_geom.y;
               if (premise.last_maintanance)
                 this.last_maintanance = premise.last_maintanance;
-              if (premise.corrosion_level==0 || premise.corrosion_level)
+              if (premise.corrosion_level == 0 || premise.corrosion_level)
                 this.corrosion_level = premise.corrosion_level;
               if (premise.last_inspection)
                 this.last_inspection = premise.last_inspection;
@@ -142,6 +142,8 @@ export class DiPreTreatPremiseComponent implements OnInit {
           let phArray = []
           let humidityArray = []
           let temperatureArray = []
+          let windSpeedArray = []
+          let pressureArray = []
           let y;
           let x;
 
@@ -167,6 +169,16 @@ export class DiPreTreatPremiseComponent implements OnInit {
                 if (!temperatureArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
                   temperatureArray.push(p)
                 break;
+              case 'wind speed':
+                if (!windSpeedArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
+                  windSpeedArray.push(p)
+                break;
+
+              case 'ext pressure':
+                if (!pressureArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
+                  pressureArray.push(p)
+                break;
+
               default:
                 break;
             }
@@ -192,6 +204,17 @@ export class DiPreTreatPremiseComponent implements OnInit {
           phArray = phArray.sort((x1, x2) => {
             return x1.x.getTime() - x2.x.getTime()
           })
+
+          windSpeedArray = windSpeedArray.sort((x1, x2) => {
+            return x1.x.getTime() - x2.x.getTime()
+          })
+
+
+          pressureArray = pressureArray.sort((x1, x2) => {
+            return x1.x.getTime() - x2.x.getTime()
+          })
+
+
 
           var chartHumityTemperature = new CanvasJS.Chart("chartContainer", {
             zoomEnabled: true,
@@ -233,8 +256,6 @@ export class DiPreTreatPremiseComponent implements OnInit {
                 showInLegend: true,
                 dataPoints: temperatureArray
               },
-
-
             ]
           });
 
@@ -269,8 +290,56 @@ export class DiPreTreatPremiseComponent implements OnInit {
             ]
           });
 
+
+          var chartWindSpeed = new CanvasJS.Chart("chartContainerWindSpeed", {
+            zoomEnabled: true,
+            animationEnabled: true,
+            exportEnabled: true,
+            title: {
+              text: "Wind Speed"
+            },
+            subtitles: [{
+              text: "Try Zooming and Panning"
+            }],
+            axisY: {
+              title: "WindSpeed[%]",
+            }, 
+            axisY2: {
+              title: "Pressure[%]", 
+            },
+            legend: {
+              cursor: "pointer",
+              verticalAlign: "top",
+              horizontalAlign: "center",
+              dockInsidePlotArea: true,
+            },
+            toolTip: {
+              shared: true
+            },
+            data: [
+              {
+                type: "line",
+                name: "WindSpeed",
+                axisYType: "primary",
+                showInLegend: true,
+                dataPoints: windSpeedArray
+              },
+              {
+                type: "line",
+                name: "Pressure",
+                axisYType: "secondary",
+                showInLegend: true,
+                dataPoints: pressureArray
+              },
+
+
+            ]
+          });
+
+
           chartHumityTemperature.render();
           chartPH.render();
+          chartWindSpeed.render();
         })
       }
     })
