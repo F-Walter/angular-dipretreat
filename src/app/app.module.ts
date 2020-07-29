@@ -68,13 +68,10 @@ import { DiPreTreatMapComponent } from './components/di-pre-treat-map/di-pre-tre
 
 
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import { GridListUCComponent } from './components/di-pre-treat-grid-list/grid-list-uc.component'; 
 import {MatGridListModule} from '@angular/material/grid-list';
-import { UseCaseDetailsComponent } from './components/di-pre-treat-UCDetails/use-case-details.component';
 
 
 import {MatExpansionModule} from '@angular/material/expansion';
-import { ProblemModalComponent } from './components/di-pre-treat-UCDetails/modal/problem-modal.component'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -86,9 +83,6 @@ import { ProblemModalComponent } from './components/di-pre-treat-UCDetails/modal
     DipretreatToolbarComponent,
     // CountryFlagDirective,
     DiPreTreatMapComponent,
-    GridListUCComponent,
-    UseCaseDetailsComponent,
-    ProblemModalComponent,
   ],
   imports: [
     BrowserModule,
