@@ -139,6 +139,8 @@ export class DiPreTreatPremiseComponent implements OnInit {
             let temperatureArray = []
             let windSpeedArray = []
             let pressureArray = []
+            let extHumidityArray = []
+            let extTemperatureArray = []
             let y;
             let x;
 
@@ -174,18 +176,19 @@ export class DiPreTreatPremiseComponent implements OnInit {
                     pressureArray.push(p)
                   break;
 
+                case 'ext humidity':
+                  if (!extHumidityArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
+                    extHumidityArray.push(p)
+                  break;
+                case 'ext temperature':
+                  if (!extTemperatureArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
+                    extTemperatureArray.push(p)
+                  break;
                 default:
                   break;
               }
 
             }
-
-            // console.log(arrayData.length)
-            // console.log(humidityArray.length)
-            // console.log(temperatureArray.length)
-            // console.log(phArray.length)
-
-            //   console.log(temperatureArray)
 
             //Sort all arrays
             humidityArray = humidityArray.sort((x1, x2) => {
@@ -206,6 +209,14 @@ export class DiPreTreatPremiseComponent implements OnInit {
 
 
             pressureArray = pressureArray.sort((x1, x2) => {
+              return x1.x.getTime() - x2.x.getTime()
+            })
+
+            extHumidityArray = extHumidityArray.sort((x1, x2) => {
+              return x1.x.getTime() - x2.x.getTime()
+            })
+
+            extTemperatureArray = extTemperatureArray.sort((x1, x2) => {
               return x1.x.getTime() - x2.x.getTime()
             })
 
@@ -251,6 +262,21 @@ export class DiPreTreatPremiseComponent implements OnInit {
                   showInLegend: true,
                   dataPoints: temperatureArray
                 },
+                {
+                  type: "line",
+                  name: "External Humidity",
+                  axisYType: "primary",
+                  showInLegend: true,
+                  dataPoints: extHumidityArray
+                },
+                {
+                  type: "line",
+                  name: "External Temperature",
+                  axisYType: "secondary",
+                  showInLegend: true,
+                  dataPoints: extTemperatureArray
+                },
+
               ]
             });
 
@@ -265,7 +291,7 @@ export class DiPreTreatPremiseComponent implements OnInit {
                 text: "Try Zooming and Panning"
               }],
               axisY: {
-                title: "PH[%]",
+                title: "pH",
               },
               legend: {
                 cursor: "pointer",
@@ -276,7 +302,7 @@ export class DiPreTreatPremiseComponent implements OnInit {
               data: [
                 {
                   type: "line",
-                  name: "PH",
+                  name: "pH",
                   axisYType: "primary",
                   showInLegend: true,
                   dataPoints: phArray
@@ -297,10 +323,10 @@ export class DiPreTreatPremiseComponent implements OnInit {
                 text: "Try Zooming and Panning"
               }],
               axisY: {
-                title: "WindSpeed[%]",
+                title: "WindSpeed[m/s]",
               },
               axisY2: {
-                title: "Pressure[%]",
+                title: "Pressure[hPa]",
               },
               legend: {
                 cursor: "pointer",

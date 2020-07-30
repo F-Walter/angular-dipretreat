@@ -81,7 +81,6 @@ import {MatExpansionModule} from '@angular/material/expansion';
     DiPreTreatLoginComponent,
     DiPreTreatPremiseComponent,
     DipretreatToolbarComponent,
-    // CountryFlagDirective,
     DiPreTreatMapComponent,
   ],
   imports: [
