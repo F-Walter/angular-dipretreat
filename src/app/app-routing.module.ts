@@ -28,9 +28,9 @@ const routes: Routes = [
     component: DiPreTreatPremiseComponent
   },
   {
-  path: 'map',
-  component: DiPreTreatMapComponent
-},
+    path: 'map',
+    component: DiPreTreatMapComponent
+  },
   {
     path: 'logged',
     children: [
@@ -56,4 +56,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

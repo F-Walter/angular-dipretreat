@@ -1,36 +1,41 @@
 <app-dipretreat-toolbar></app-dipretreat-toolbar>
 
 
-        <form id="dateContainer" [formGroup]="datesForm">
-            <h2>Define time window</h2>
-            <ngb-alert type="danger" *ngIf="!closedAlert" (close)="closedAlert=true">
-                The inserted dates are not in the right order.</ngb-alert>
-            <mat-form-field color="primary">
-                <mat-label>Start date</mat-label>
-                <input matInput [matDatepicker]="startDatePicker" formControlName="startDate"
-                    (dateInput)="changeSelectedDate($event.value)">
-                <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #startDatePicker color="primary"></mat-datepicker>
-            </mat-form-field>
+<form id="dateContainer" [formGroup]="datesForm">
+    <h2>Define time window</h2>
+    <ngb-alert type="danger" *ngIf="!closedAlert" (close)="closedAlert=true">
+        The inserted dates are not in the right order.</ngb-alert>
+    <mat-form-field color="primary">
+        <mat-label>Start date</mat-label>
+        <input matInput [matDatepicker]="startDatePicker" formControlName="startDate"
+            (dateInput)="changeSelectedDate($event.value)">
+        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker color="primary"></mat-datepicker>
+    </mat-form-field>
 
-            <mat-form-field color="primary">
-                <mat-label>End date</mat-label>
-                <input matInput [matDatepicker]="endDatePicker" formControlName="endDate">
-                <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #endDatePicker color="primary"></mat-datepicker>
-            </mat-form-field>
-            <button mat-raised-button color="primary" (click)="submit()">Confirm</button>
-            <button mat-raised-button color="primary" (click)="submitCorrosionForcast()">Corrosion Forecast</button>
-        </form>
+    <mat-form-field color="primary">
+        <mat-label>End date</mat-label>
+        <input matInput [matDatepicker]="endDatePicker" formControlName="endDate">
+        <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker color="primary"></mat-datepicker>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="submit()">Confirm</button>
+    <button mat-raised-button color="primary" (click)="submitCorrosionForcast()">Corrosion Forecast</button>
+</form>
 
-    
 
-<div id="externalContainer">
+
+<div class="externalContainer">
     <div id="container">
-        <div id="chartContainer" style="height: 370px; width: 100%; margin-left:auto;margin-right:auto;"></div>
-        <div id="chartContainerPH" style="height: 370px; width: 100%; margin-left:auto;margin-right:auto;"></div>
+        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+        <div id="internalContainer">
+                <div id="chartContainerPH" style="height: 370px; width: 100%;"></div>
+                <div id="chartContainerWindSpeed" style="height: 370px; width: 100%;"></div>
+
+        </div>
+
     </div>
-   
+
     <div id="infoPremise">
         <p><span class="title"> Name: </span> <span id="premise_name">{{premise_name}} </span> </p>
         <p><span class="title"> Position: </span> <span id="premise_geom">{{premise_geom}} </span> </p>
@@ -41,5 +46,3 @@
     </div>
 
 </div>
-
-

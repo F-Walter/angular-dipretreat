@@ -53,23 +53,25 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 // import {MatPaginatorModule} from '@angular/material/paginator';
 // import {MatProgressBarModule} from '@angular/material/progress-bar';
 // import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-// import {MatRadioModule} from '@angular/material/radio';
+import {MatRadioModule} from '@angular/material/radio';
 
 // import {MatSliderModule} from '@angular/material/slider';
 // import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 // import {MatSnackBarModule} from '@angular/material/snack-bar';
 // import {MatSortModule} from '@angular/material/sort';
-// import {MatTableModule} from '@angular/material/table';
-// import {MatTabsModule} from '@angular/material/tabs';
+import {MatTableModule} from '@angular/material/table';
+import {MatTabsModule} from '@angular/material/tabs';
 import { MatTreeModule } from '@angular/material/tree';
 import { DiPreTreatPremiseComponent } from './components/di-pre-treat-premise/di-pre-treat-premise.component';
 import { DipretreatToolbarComponent } from './components/di-pre-treat-toolbar/dipretreat-toolbar.component';
 import { DiPreTreatMapComponent } from './components/di-pre-treat-map/di-pre-treat-map.component';
 
 
-import {MatSlideToggleModule} from '@angular/material/slide-toggle'; 
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 
+import {MatExpansionModule} from '@angular/material/expansion';
 @NgModule({
   declarations: [
     AppComponent,
@@ -103,7 +105,12 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSlideToggleModule,
-    
+    MatGridListModule,
+    MatTableModule,
+    MatTabsModule,
+    MatExpansionModule,
+    MatRadioModule,
+
     
 
     /////////////////////////
@@ -135,7 +142,6 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     // MatPaginatorModule,
     // MatProgressBarModule,
     // MatProgressSpinnerModule,
-    // MatRadioModule,
     // MatRippleModule,
     // MatSelectModule,
     // MatSidenavModule,
@@ -144,7 +150,6 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     // MatSnackBarModule,
     // MatSortModule,
     // MatTableModule,
-    // MatTabsModule,
     // MatToolbarModule,
     // MatTooltipModule,
     // MatTreeModule,
