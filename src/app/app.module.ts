@@ -20,7 +20,7 @@ import { DiPreTreatLoginComponent } from './components/dipretreat-login/di-pre-t
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import {MatNativeDateModule} from '@angular/material/core'
+import {MatNativeDateModule, MAT_DATE_LOCALE} from '@angular/material/core'
 import {MatDatepickerModule} from '@angular/material/datepicker'; 
 
 // import { CountryFlagDirective} from './country-flag.directive';
@@ -72,6 +72,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 
 
 import {MatExpansionModule} from '@angular/material/expansion';
+import { ForecastDialogComponent } from './components/di-pre-treat-premise/forecast/forecast-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -82,6 +83,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     DiPreTreatPremiseComponent,
     DipretreatToolbarComponent,
     DiPreTreatMapComponent,
+    ForecastDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -155,7 +157,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     // PortalModule,
     // ScrollingModule,
   ],
-  providers: [],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'it' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

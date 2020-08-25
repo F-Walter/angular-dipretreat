@@ -7,6 +7,8 @@ import { Sensor } from 'src/app/model/Sensor';
 import * as CanvasJS from '../../external-libraries/canvasjs.min.js';
 import { Point } from 'src/app/model/Point.js';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ForecastDialogComponent } from './forecast/forecast-dialog.component.js';
 
 @Component({
   selector: 'app-di-pre-treat-premise',
@@ -37,7 +39,13 @@ export class DiPreTreatPremiseComponent implements OnInit {
   last_inspection: string;
   creation_year: string;
 
-  constructor(private activatedRoute: ActivatedRoute, private premiseService: PremiseService, private fb: FormBuilder, private router: Router) {
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private premiseService: PremiseService,
+    fb: FormBuilder,
+    private router: Router,
+    public dialog: MatDialog) {
+
     this.datesForm = fb.group({
       startDate: [''],
       endDate: ['']
@@ -57,6 +65,17 @@ export class DiPreTreatPremiseComponent implements OnInit {
     this.creation_year = "N/A"
   }
 
+
+
+
+  private openDialog(): void {
+    const dialogRef = this.dialog.open(ForecastDialogComponent, {
+      width: '75%',
+      height: '75%',
+      // data: { name: this.name, animal: this.animal }
+    });
+  }
+
   changeSelectedDate(date: Date) {
     // console.log(date.toISOString().substring(0, 10))
   }
@@ -70,10 +89,13 @@ export class DiPreTreatPremiseComponent implements OnInit {
     }
   }
 
+
+
+
   //TODO: integration with other company
   submitCorrosionForcast() {
     console.log("Corrosion Forecast");
-
+    this.openDialog();
   }
 
   ngOnInit(): void {
