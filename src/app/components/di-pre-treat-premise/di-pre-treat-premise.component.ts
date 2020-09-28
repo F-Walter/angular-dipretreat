@@ -68,11 +68,11 @@ export class DiPreTreatPremiseComponent implements OnInit {
 
 
 
-  private openDialog(): void {
+  private openDialog(historicalData: []): void {
     const dialogRef = this.dialog.open(ForecastDialogComponent, {
       width: '75%',
       height: '75%',
-      // data: { name: this.name, animal: this.animal }
+      data: { historicalData: historicalData }
     });
   }
 
@@ -95,7 +95,11 @@ export class DiPreTreatPremiseComponent implements OnInit {
   //TODO: integration with other company
   submitCorrosionForcast() {
     console.log("Corrosion Forecast");
-    this.openDialog();
+    this.premiseService.getHistoricalPremiseData(this.premiseId).subscribe(data => {
+      let historicalData = data
+      this.openDialog(historicalData);
+    });
+
   }
 
   ngOnInit(): void {
@@ -106,14 +110,20 @@ export class DiPreTreatPremiseComponent implements OnInit {
 
         if (param['startDate'])
           this.startDateSelected = param['startDate']
-        else
-          this.startDateSelected = "2020-01-04"
-
+        else {
+          let oneMonthAgo = new Date()
+          oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+          this.startDateSelected = oneMonthAgo.toISOString().substring(0, 10)
+        }
 
         if (param['endDate'])
           this.endDateSelected = param['endDate']
-        else
-          this.endDateSelected = "2020-07-29"
+        else {
+          let today = new Date()
+          this.startDateSelected = today.toISOString().substring(0, 10)
+        }
+
+
 
         let arrayData: Sensor[] = []
         // console.log(param['premiseId'])
@@ -124,6 +134,13 @@ export class DiPreTreatPremiseComponent implements OnInit {
               for (let index = 0; index < premiseData.length; index++) {
                 for (let i = 0; i < premiseData.length; i++) {
                   arrayData.push(new Sensor(premiseData[i]))
+                  /*  arrayData.push(new Sensor(
+                    premiseData[i].sensor_description, 
+                    premiseData[i].sensor_data, 
+                    premiseData[i].sensor_timestamp, 
+                    premiseData[i].sensor_coord, 
+                    premiseData[i].premises_name))
+                } */
                 }
               }
               return arrayData
@@ -384,23 +401,10 @@ export class DiPreTreatPremiseComponent implements OnInit {
             chartPH.render();
             chartWindSpeed.render();
           })
-
-
-
-
-
         })
-
-
-
-
-
-      }
+     }
     })
   }
-
-
-
 }
 
 
