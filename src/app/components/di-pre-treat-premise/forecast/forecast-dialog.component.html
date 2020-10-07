@@ -1,10 +1,6 @@
-<div>
-
-
-
-
+<div class="flexCenter">
+    <h2>Define time window</h2>
     <form id="dateContainer" [formGroup]="datesForm">
-        <h2>Define time window</h2>
         <ngb-alert type="danger" *ngIf="!closedAlert" (close)="closedAlert=true">
             The inserted dates are not in the right order.</ngb-alert>
         <mat-form-field color="primary">
@@ -22,8 +18,8 @@
         </mat-form-field>
         <button mat-raised-button color="primary" (click)="submit()">Confirm</button>
     </form>
+</div>
 
-    
-
-
+<div>
+    <!-- GRAFICO RICEVUTO PER FORECAST -->
 </div>
