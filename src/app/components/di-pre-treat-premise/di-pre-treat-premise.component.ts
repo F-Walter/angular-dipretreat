@@ -6,7 +6,7 @@ import { map, catchError } from 'rxjs/operators';
 import { Sensor } from 'src/app/model/Sensor';
 import * as CanvasJS from '../../external-libraries/canvasjs.min.js';
 import { Point } from 'src/app/model/Point.js';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ForecastDialogComponent } from './forecast/forecast-dialog.component.js';
 
@@ -19,15 +19,17 @@ export class DiPreTreatPremiseComponent implements OnInit {
 
   activatedRoutesSubscription: Subscription
 
-
+  isAllLoaded: boolean
 
   premiseData$: Observable<any>
   premiseId: string
   datesForm: FormGroup;
   startDateSelected: string;
   endDateSelected: string;
-  closedAlert: boolean
 
+
+  message: string
+  alertType: string;
 
   //Premise information
 
@@ -38,6 +40,7 @@ export class DiPreTreatPremiseComponent implements OnInit {
   corrosion_level: string;
   last_inspection: string;
   creation_year: string;
+  today: Date;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -46,15 +49,19 @@ export class DiPreTreatPremiseComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog) {
 
+    this.today = new Date()
+
+    this.message = ""
+
+    this.isAllLoaded = false
+
     this.datesForm = fb.group({
-      startDate: [''],
-      endDate: ['']
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required]
     })
 
     this.premiseData$ = of([])
 
-    this.closedAlert = true
-    // console.log(this.datesForm)
 
     this.premise_id = "N/A"
     this.premise_name = "N/A"
@@ -65,62 +72,33 @@ export class DiPreTreatPremiseComponent implements OnInit {
     this.creation_year = "N/A"
   }
 
-
-
-
-  private openDialog(historicalData: []): void {
-    const dialogRef = this.dialog.open(ForecastDialogComponent, {
-      width: '75%',
-      height: '75%',
-      data: { historicalData: historicalData }
-    });
-  }
-
-  changeSelectedDate(date: Date) {
-    // console.log(date.toISOString().substring(0, 10))
-  }
-
-  submit() {
-    if (this.datesForm.value.startDate.getTime() <= this.datesForm.value.endDate.getTime()) {//TODO: avvisare in caso di errore
-      this.closedAlert = true;
-      this.router.navigate(["/premiseDetails"], { queryParams: { premiseId: this.premiseId, startDate: this.datesForm.value.startDate.toISOString().substring(0, 10), endDate: this.datesForm.value.endDate.toISOString().substring(0, 10) } })
-    } else {
-      this.closedAlert = false
-    }
-  }
-
-
-
-
-  //TODO: integration with other company
-  submitCorrosionForcast() {
-    console.log("Corrosion Forecast");
-    this.premiseService.getHistoricalPremiseData(this.premiseId).subscribe(data => {
-      let historicalData = data
-      this.openDialog(historicalData);
-    });
-
-  }
-
   ngOnInit(): void {
 
     this.activatedRoutesSubscription = this.activatedRoute.queryParams.subscribe((param) => {
       if (param['premiseId']) {
         this.premiseId = param['premiseId']
 
-        if (param['startDate'])
+        if (param['startDate']) {
           this.startDateSelected = param['startDate']
+          this.datesForm.get('startDate').setValue(this.startDateSelected)
+        }
         else {
+          // The field was not defined => startDate = one month ago 
           let oneMonthAgo = new Date()
           oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-          this.startDateSelected = oneMonthAgo.toISOString().substring(0, 10)
+
+          this.startDateSelected = this.convertDateToStringFormat(oneMonthAgo)
+          this.datesForm.get('startDate').setValue(oneMonthAgo)
         }
 
-        if (param['endDate'])
+        if (param['endDate']) {
           this.endDateSelected = param['endDate']
+          this.datesForm.get('endDate').setValue(this.endDateSelected)
+        }
         else {
-          let today = new Date()
-          this.startDateSelected = today.toISOString().substring(0, 10)
+          // The field was not defined => endDate = today 
+          this.endDateSelected = this.convertDateToStringFormat(this.today)
+          this.datesForm.get('endDate').setValue(this.today)
         }
 
 
@@ -171,9 +149,14 @@ export class DiPreTreatPremiseComponent implements OnInit {
 
           this.premiseData$.subscribe((arrayData: Sensor[]) => {
 
+            this.isAllLoaded = true
+
+
             // arrayData = arrayData.slice(0, 10000)  //se si vuole limitare i dati
             // console.log(arrayData)
-            let phArray = []
+            let ph1Array = []
+            let ph2Array = []
+            let ph3Array = []
             let humidityArray = []
             let temperatureArray = []
             let windSpeedArray = []
@@ -182,6 +165,9 @@ export class DiPreTreatPremiseComponent implements OnInit {
             let extTemperatureArray = []
             let y;
             let x;
+
+            console.log(arrayData);
+            
 
             for (let i = 0; i < arrayData.length; i++) {
 
@@ -194,8 +180,16 @@ export class DiPreTreatPremiseComponent implements OnInit {
 
               switch (arrayData[i].sensor_description) {
                 case 'pH':
-                  if (!phArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
-                    phArray.push(p)
+                  if (!ph1Array.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
+                    ph1Array.push(p)
+                  break;
+                case 'pH1':
+                  if (!ph2Array.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
+                    ph2Array.push(p)
+                  break;
+                case 'pH2':
+                  if (!ph3Array.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
+                    ph3Array.push(p)
                   break;
                 case 'humidity':
                   if (!humidityArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
@@ -238,7 +232,22 @@ export class DiPreTreatPremiseComponent implements OnInit {
               return x1.x.getTime() - x2.x.getTime()
             })
 
-            phArray = phArray.sort((x1, x2) => {
+
+
+            console.log("PH1 - ", ph1Array.length);
+            
+            console.log("PH2 - ", ph2Array.length);
+            
+            console.log("PH3 - ", ph3Array.length);      
+            ph1Array = ph1Array.sort((x1, x2) => {
+              return x1.x.getTime() - x2.x.getTime()
+            })
+
+            ph2Array = ph2Array.sort((x1, x2) => {
+              return x1.x.getTime() - x2.x.getTime()
+            })
+
+            ph3Array = ph3Array.sort((x1, x2) => {
               return x1.x.getTime() - x2.x.getTime()
             })
 
@@ -258,6 +267,7 @@ export class DiPreTreatPremiseComponent implements OnInit {
             extTemperatureArray = extTemperatureArray.sort((x1, x2) => {
               return x1.x.getTime() - x2.x.getTime()
             })
+
 
 
 
@@ -341,10 +351,24 @@ export class DiPreTreatPremiseComponent implements OnInit {
               data: [
                 {
                   type: "line",
-                  name: "pH",
+                  name: "pH1",
                   axisYType: "primary",
                   showInLegend: true,
-                  dataPoints: phArray
+                  dataPoints: ph1Array
+                },
+                {
+                  type: "line",
+                  name: "pH2",
+                  axisYType: "primary",
+                  showInLegend: true,
+                  dataPoints: ph2Array
+                },
+                {
+                  type: "line",
+                  name: "pH3",
+                  axisYType: "primary",
+                  showInLegend: true,
+                  dataPoints: ph3Array
                 },
 
               ]
@@ -396,16 +420,92 @@ export class DiPreTreatPremiseComponent implements OnInit {
               ]
             });
 
-
             chartHumityTemperature.render();
             chartPH.render();
             chartWindSpeed.render();
+
           })
         })
-     }
+      }
     })
   }
+
+
+
+
+  private openDialog(historicalData: []): void {
+    const dialogRef = this.dialog.open(ForecastDialogComponent, {
+      width: '75%',
+      height: '75%',
+      data: { historicalData: historicalData }
+    });
+  }
+
+  changeSelectedDate(date: Date) {
+    // console.log(date.toISOString().substring(0, 10))
+  }
+
+  submit() {
+
+    let startDate = new Date(this.datesForm.get('startDate').value)
+    let endDate = new Date(this.datesForm.get('endDate').value)
+
+
+    console.log(startDate, endDate, this.convertDateToStringFormat(startDate), this.convertDateToStringFormat(endDate))
+
+    if (startDate.getTime() > endDate.getTime()) {
+      //errore data inizio > data fine
+      this.message = "The inserted dates are not in the right order."
+      this.alertType = "danger"
+    } else {
+      this.message = ""
+      this.alertType = ""
+      this.isAllLoaded = false
+      // faccio ricaricare il componente con i dati corretti
+      this.router.navigate([
+        "/premiseDetails"],
+        {
+          queryParams: {
+            premiseId: this.premiseId,
+            startDate: this.convertDateToStringFormat(startDate),
+            endDate: this.convertDateToStringFormat(endDate)
+          }
+        })
+
+    }
+
+  }
+
+
+
+
+  //TODO: integration with other company
+  submitCorrosionForcast() {
+    console.log("Corrosion Forecast");
+    this.premiseService.getHistoricalPremiseData(this.premiseId).subscribe(data => {
+      let historicalData = data
+      this.openDialog(historicalData);
+    });
+
+  }
+
+  private convertDateToStringFormat(selectedDate: Date) {
+    let month = selectedDate.getMonth()
+    let date = selectedDate.getDate()
+    let formattedMonth = ""
+    let formattedDate = ""
+    if (month < 10)
+      formattedMonth = `0${month}`
+    else
+      formattedMonth = `${month}`
+    if (date < 10)
+      formattedDate = `0${date}`
+    else
+      formattedDate = `${date}`
+    return `${selectedDate.getFullYear()}-${formattedMonth}-${formattedDate}`
+  }
 }
+
 
 
 

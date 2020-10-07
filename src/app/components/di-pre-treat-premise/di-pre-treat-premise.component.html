@@ -1,13 +1,12 @@
 <app-dipretreat-toolbar></app-dipretreat-toolbar>
 
 
+
 <form id="dateContainer" [formGroup]="datesForm">
     <h2>Define time window</h2>
-    <ngb-alert type="danger" *ngIf="!closedAlert" (close)="closedAlert=true">
-        The inserted dates are not in the right order.</ngb-alert>
     <mat-form-field color="primary">
         <mat-label>Start date</mat-label>
-        <input matInput [matDatepicker]="startDatePicker" formControlName="startDate"
+        <input matInput [matDatepicker]="startDatePicker" [max]="today" formControlName="startDate"
             (dateInput)="changeSelectedDate($event.value)">
         <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #startDatePicker color="primary"></mat-datepicker>
@@ -15,7 +14,7 @@
 
     <mat-form-field color="primary">
         <mat-label>End date</mat-label>
-        <input matInput [matDatepicker]="endDatePicker" formControlName="endDate">
+        <input matInput [matDatepicker]="endDatePicker" [max]="today" formControlName="endDate">
         <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #endDatePicker color="primary"></mat-datepicker>
     </mat-form-field>
@@ -23,25 +22,34 @@
     <button mat-raised-button color="primary" (click)="submitCorrosionForcast()">Corrosion Forecast</button>
 </form>
 
+<ngb-alert [type]="alertType" *ngIf="message" (close)="message=''">
+    {{message}}
+</ngb-alert>
+
+
 
 
 <div class="externalContainer">
     <div id="container">
         <div id="chartContainer" style="height: 370px; width: 100%;"></div>
         <div id="internalContainer">
-                <div id="chartContainerPH" style="height: 370px; width: 100%;"></div>
-                <div id="chartContainerWindSpeed" style="height: 370px; width: 100%;"></div>
+            <div id="chartContainerPH" style="height: 370px; width: 100%;"></div>
+            <div id="chartContainerWindSpeed" style="height: 370px; width: 100%;"></div>
         </div>
 
     </div>
 
     <div id="infoPremise">
+        <div *ngIf="!isAllLoaded" class="flexCenter">
+            <mat-spinner diameter="200" strokeWidth="5"></mat-spinner>
+        </div>
+
         <p><span class="title"> Name: </span> <span id="premise_name">{{premise_name}} </span> </p>
         <p><span class="title"> Position: </span> <span id="premise_geom">{{premise_geom}} </span> </p>
-        <p><span class="title"> Last maintanance: </span> <span id="last_maintanance">{{last_maintanance}} </span> </p>
+        <p><span class="title"> Last maintanance: </span> <span id="last_maintanance">{{last_maintanance}} </span>
+        </p>
         <p><span class="title"> Corrosion level: </span> <span id="corrosion_level">{{corrosion_level}} </span> </p>
         <p><span class="title"> Last inspection: </span> <span id="last_inspection">{{last_inspection}} </span> </p>
         <p><span class="title"> Creation year: </span> <span id="creation_year">{{creation_year}} </span> </p>
     </div>
-
 </div>
