@@ -8,6 +8,14 @@
 
 .flexCenter {
     display: flex;
+    flex-direction: row;
+    justify-content: center;
+    min-height: 75%;
+}
+
+
+.flexCenterColumn{
+    display: flex;
     flex-direction: column;
     justify-content: center;
 }

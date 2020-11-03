@@ -34,6 +34,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { ForecastDialogComponent } from './components/di-pre-treat-premise/forecast/forecast-dialog.component';
+import { SafePipe } from './components/di-pre-treat-premise/forecast/SafePipe';
 
 // import { CountryFlagDirective} from './country-flag.directive';
 //////////////////////////////////////////////////
@@ -77,6 +78,7 @@ import { ForecastDialogComponent } from './components/di-pre-treat-premise/forec
     DipretreatToolbarComponent,
     DiPreTreatMapComponent,
     ForecastDialogComponent,
+    SafePipe,
   ],
   imports: [
     BrowserModule,

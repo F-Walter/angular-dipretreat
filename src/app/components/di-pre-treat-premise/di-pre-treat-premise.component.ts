@@ -166,8 +166,8 @@ export class DiPreTreatPremiseComponent implements OnInit {
             let y;
             let x;
 
-            console.log(arrayData);
-            
+            // console.log(arrayData);
+
 
             for (let i = 0; i < arrayData.length; i++) {
 
@@ -179,15 +179,15 @@ export class DiPreTreatPremiseComponent implements OnInit {
               let p: Point = new Point(x, y)
 
               switch (arrayData[i].sensor_description) {
-                case 'pH':
+                case 'pH1':
                   if (!ph1Array.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
                     ph1Array.push(p)
                   break;
-                case 'pH1':
+                case 'pH2':
                   if (!ph2Array.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
                     ph2Array.push(p)
                   break;
-                case 'pH2':
+                case 'pH3':
                   if (!ph3Array.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
                     ph3Array.push(p)
                   break;
@@ -235,10 +235,10 @@ export class DiPreTreatPremiseComponent implements OnInit {
 
 
             console.log("PH1 - ", ph1Array.length);
-            
+
             console.log("PH2 - ", ph2Array.length);
-            
-            console.log("PH3 - ", ph3Array.length);      
+
+            console.log("PH3 - ", ph3Array.length);
             ph1Array = ph1Array.sort((x1, x2) => {
               return x1.x.getTime() - x2.x.getTime()
             })
@@ -433,11 +433,11 @@ export class DiPreTreatPremiseComponent implements OnInit {
 
 
 
-  private openDialog(historicalData: []): void {
+  private openDialog(premiseId: string): void {
     const dialogRef = this.dialog.open(ForecastDialogComponent, {
       width: '75%',
-      height: '75%',
-      data: { historicalData: historicalData }
+      height: '90%',
+      data: { premiseId: premiseId }
     });
   }
 
@@ -445,13 +445,14 @@ export class DiPreTreatPremiseComponent implements OnInit {
     // console.log(date.toISOString().substring(0, 10))
   }
 
-  submit() {
-
+  /**
+   * Metodo usato per inviare richiesta e ottenere nuovi grafici
+   */
+  confirm() {
     let startDate = new Date(this.datesForm.get('startDate').value)
     let endDate = new Date(this.datesForm.get('endDate').value)
 
-
-    console.log(startDate, endDate, this.convertDateToStringFormat(startDate), this.convertDateToStringFormat(endDate))
+    //console.log(startDate, endDate, this.convertDateToStringFormat(startDate), this.convertDateToStringFormat(endDate))
 
     if (startDate.getTime() > endDate.getTime()) {
       //errore data inizio > data fine
@@ -481,16 +482,12 @@ export class DiPreTreatPremiseComponent implements OnInit {
 
   //TODO: integration with other company
   submitCorrosionForcast() {
-    console.log("Corrosion Forecast");
-    this.premiseService.getHistoricalPremiseData(this.premiseId).subscribe(data => {
-      let historicalData = data
-      this.openDialog(historicalData);
-    });
-
+    console.log("Corrosion Forecast "+ this.premiseId);
+    this.openDialog(this.premiseId);
   }
 
   private convertDateToStringFormat(selectedDate: Date) {
-    let month = selectedDate.getMonth()
+    let month = selectedDate.getMonth() + 1
     let date = selectedDate.getDate()
     let formattedMonth = ""
     let formattedDate = ""

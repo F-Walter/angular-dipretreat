@@ -35,15 +35,17 @@ export class PremiseService {
       catchError(err => of([])))
   }
 
-  sendForecastRequest(startDate: Date, endDate: Date, historicalData: []): Observable<ForecastInterface[]> {
+/*  sendForecastRequest(startDate: Date, endDate: Date, premiseId: string): Observable<ForecastInterface[]> {
+    //TODO da sistemare
+    
     let url = `/prediction`
     let start = startDate.toISOString().substring(0, 10);
     let end = endDate.toISOString().substring(0, 10);
 
-    return this.http.post<ForecastInterface[]>(url, { start_date: start, end_date: end, data: historicalData }).pipe(
+    return this.http.post<ForecastInterface[]>(url, { start_date: start, end_date: end, data: premiseId }).pipe(
       retry(3),
       catchError(err => of([])))
-  }
+  }*/
 
 }
 
