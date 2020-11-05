@@ -9,9 +9,7 @@ export const environment = {
   }
 };
 
-export const API_PREMISES = {
-  PREMISES: "http://icowms.cloud.reply.eu/sensordata/premises", 
-}
+export const ICOWMS = "http://icowms.cloud.reply.eu"
 
 export const positions = [
   {

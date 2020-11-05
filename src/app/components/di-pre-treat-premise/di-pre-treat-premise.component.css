@@ -16,6 +16,9 @@ form {
 h2 {
   text-align: center;
 }
+p{
+  width: max-content;
+}
 
 #dateContainer {
   margin-top: 2%;

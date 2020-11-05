@@ -44,12 +44,17 @@
             <mat-spinner diameter="200" strokeWidth="5"></mat-spinner>
         </div>
 
-        <p><span class="title"> Name: </span> <span id="premise_name">{{premise_name}} </span> </p>
-        <p><span class="title"> Position: </span> <span id="premise_geom">{{premise_geom}} </span> </p>
-        <p><span class="title"> Last maintanance: </span> <span id="last_maintanance">{{last_maintanance}} </span>
+        <p><span class="title"> Name: </span> <span id="premise_name">{{premise_name? premise_name:"N/A"}} </span> </p>
+        <p><span class="title"> Position: </span> <span id="premise_geom">{{premise_geom?premise_geom:"N/A"}} </span>
         </p>
-        <p><span class="title"> Corrosion level: </span> <span id="corrosion_level">{{corrosion_level}} </span> </p>
-        <p><span class="title"> Last inspection: </span> <span id="last_inspection">{{last_inspection}} </span> </p>
-        <p><span class="title"> Creation year: </span> <span id="creation_year">{{creation_year}} </span> </p>
+        <p><span class="title"> Last maintanance: </span> <span
+                id="last_maintanance">{{last_maintanance?last_maintanance:"N/A"}} </span>
+        </p>
+        <p><span class="title"> Corrosion level: </span> <span
+                id="corrosion_level">{{corrosion_level?corrosion_level:"N/A"}} </span> </p>
+        <p><span class="title"> Last inspection: </span> <span
+                id="last_inspection">{{last_inspection?last_inspection:"N/A"}} </span> </p>
+        <p><span class="title"> Creation year: </span> <span id="creation_year">{{creation_year?creation_year:"N/A"}}
+            </span> </p>
     </div>
 </div>
