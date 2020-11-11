@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DiPreTreatMenuComponent } from './di-pre-treat-menu.component';
+import { ForecastDialogComponent } from './forecast-dialog.component';
 
-describe('DiPreTreatMenuComponent', () => {
-  let component: DiPreTreatMenuComponent;
-  let fixture: ComponentFixture<DiPreTreatMenuComponent>;
+describe('ForecastDialogComponent', () => {
+  let component: ForecastDialogComponent;
+  let fixture: ComponentFixture<ForecastDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DiPreTreatMenuComponent ]
+      declarations: [ ForecastDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DiPreTreatMenuComponent);
+    fixture = TestBed.createComponent(ForecastDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

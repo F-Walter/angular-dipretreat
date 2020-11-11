@@ -1,0 +1,30 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon" color="primary">close</mat-icon>
+</button>
+
+<div class="flexCenterColumn">
+    <h2>Define time window</h2>
+    <form id="dateContainer" [formGroup]="datesForm">
+        <ngb-alert type="danger" *ngIf="!closedAlert" (close)="closedAlert=true">
+            The inserted dates are not in the right order.</ngb-alert>
+        <mat-form-field color="primary">
+            <mat-label>Start date</mat-label>
+            <input matInput [matDatepicker]="startDatePicker" formControlName="start">
+            <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #startDatePicker color="primary"></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field color="primary">
+            <mat-label>End date</mat-label>
+            <input matInput [matDatepicker]="endDatePicker" formControlName="end">
+            <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #endDatePicker color="primary"></mat-datepicker>
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="confirmForecast()">Confirm</button>
+    </form>
+</div>
+
+<div *ngIf="forecastSubmitted" class="containerFrame">
+    <iframe [src]="src | safe" title="Corrosion Forecast" class="responsive-iframe">
+    </iframe>
+</div>

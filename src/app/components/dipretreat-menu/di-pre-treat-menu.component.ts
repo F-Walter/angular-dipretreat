@@ -15,7 +15,7 @@ export class DiPreTreatMenuComponent implements OnInit {
   selectedValue: string;
   selectedCountryValue: string;
 
-  premises$: Observable<Premise>
+  premises$: Observable<Premise[]>
 
   constructor(
     private router: Router,

@@ -20,12 +20,23 @@ import { DiPreTreatLoginComponent } from './components/dipretreat-login/di-pre-t
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import {MatNativeDateModule} from '@angular/material/core'
+import {MatNativeDateModule, MAT_DATE_LOCALE} from '@angular/material/core'
 import {MatDatepickerModule} from '@angular/material/datepicker'; 
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatTableModule} from '@angular/material/table';
+import {MatTabsModule} from '@angular/material/tabs';
+import { MatTreeModule } from '@angular/material/tree';
+import { DiPreTreatPremiseComponent } from './components/di-pre-treat-premise/di-pre-treat-premise.component';
+import { DipretreatToolbarComponent } from './components/di-pre-treat-toolbar/dipretreat-toolbar.component';
+import { DiPreTreatMapComponent } from './components/di-pre-treat-map/di-pre-treat-map.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { ForecastDialogComponent } from './components/di-pre-treat-premise/forecast/forecast-dialog.component';
+import { SafePipe } from './components/di-pre-treat-premise/forecast/SafePipe';
 
 // import { CountryFlagDirective} from './country-flag.directive';
-
-
 //////////////////////////////////////////////////
 // import {A11yModule} from '@angular/cdk/a11y';
 // import {ClipboardModule} from '@angular/cdk/clipboard';
@@ -47,31 +58,15 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 // import {MatDividerModule} from '@angular/material/divider';
 // import {MatExpansionModule} from '@angular/material/expansion';
 // import {MatGridListModule} from '@angular/material/grid-list';
-
 // import {MatMenuModule} from '@angular/material/menu';
 // import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 // import {MatPaginatorModule} from '@angular/material/paginator';
 // import {MatProgressBarModule} from '@angular/material/progress-bar';
-// import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatRadioModule} from '@angular/material/radio';
-
 // import {MatSliderModule} from '@angular/material/slider';
 // import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 // import {MatSnackBarModule} from '@angular/material/snack-bar';
 // import {MatSortModule} from '@angular/material/sort';
-import {MatTableModule} from '@angular/material/table';
-import {MatTabsModule} from '@angular/material/tabs';
-import { MatTreeModule } from '@angular/material/tree';
-import { DiPreTreatPremiseComponent } from './components/di-pre-treat-premise/di-pre-treat-premise.component';
-import { DipretreatToolbarComponent } from './components/di-pre-treat-toolbar/dipretreat-toolbar.component';
-import { DiPreTreatMapComponent } from './components/di-pre-treat-map/di-pre-treat-map.component';
 
-
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MatGridListModule} from '@angular/material/grid-list';
-
-
-import {MatExpansionModule} from '@angular/material/expansion';
 @NgModule({
   declarations: [
     AppComponent,
@@ -82,6 +77,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     DiPreTreatPremiseComponent,
     DipretreatToolbarComponent,
     DiPreTreatMapComponent,
+    ForecastDialogComponent,
+    SafePipe,
   ],
   imports: [
     BrowserModule,
@@ -109,7 +106,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatTabsModule,
     MatExpansionModule,
     MatRadioModule,
-
+    MatProgressSpinnerModule,
     
 
     /////////////////////////
@@ -155,7 +152,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     // PortalModule,
     // ScrollingModule,
   ],
-  providers: [],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'it' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
