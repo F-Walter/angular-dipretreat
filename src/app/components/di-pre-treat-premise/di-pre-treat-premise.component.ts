@@ -90,8 +90,10 @@ export class DiPreTreatPremiseComponent implements OnInit {
           this.datesForm.get('endDate').setValue(this.today)
         }
 
-
-
+        this.premiseService.getAlarmForPremise(Number(this.premiseId)).subscribe((alarms: []) => {          
+          if (alarms.length > 0)
+            this.warningTemperature = true
+        })
 
         this.premiseService.getPremiseSensorData(this.premiseId, this.startDateSelected, this.endDateSelected).subscribe((sensorData: Sensor[]) => {
           let sensors: Sensor[] = []
@@ -150,12 +152,8 @@ export class DiPreTreatPremiseComponent implements OnInit {
                   humidityArray.push(p)
                 break;
               case "temperature":
-                if (!temperatureArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y)))) {
+                if (!temperatureArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
                   temperatureArray.push(p)
-                  if (p.y < -30 && p.y > 50) {
-                    this.warningTemperature = true
-                  }
-                }
                 break;
               case 'wind speed':
                 if (!windSpeedArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))

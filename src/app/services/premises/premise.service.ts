@@ -36,6 +36,21 @@ export class PremiseService {
       retry(3),
       catchError(err => of([])))
   }
+  getAlarmForPremise(premiseId: number) {
+    let url = `${ICOWMS}/sensordata/getAlarm?premises_id=${premiseId}`
+    
+    return this.http.get(url).pipe(
+      retry(3),
+      catchError(err => of([])))
+  }
+
+  getAlarm():Observable<any> {
+    let url = `${ICOWMS}/sensordata/getAlarm`
+    
+    return this.http.get(url).pipe(
+      retry(3),
+      catchError(err => of([])))
+  }
 }
 
 export interface ForecastInterface {
