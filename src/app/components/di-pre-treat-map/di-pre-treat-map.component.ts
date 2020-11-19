@@ -86,7 +86,7 @@ export class DiPreTreatMapComponent implements OnInit {
             //No corrosion - green
             case 0:
               popup = new mapboxgl.Popup({ offset: 25 })
-                .setText(`Name: ${premiseName} - No corrosion`);
+                .setText(`Name: ${premiseName} - No deterioration`);
 
               marker = new mapboxgl.Marker({ color: 'green' })
                 .setLngLat([lng, lat])
@@ -97,7 +97,7 @@ export class DiPreTreatMapComponent implements OnInit {
             // Uncertain level of corrosion - yellow
             case 1:
               popup = new mapboxgl.Popup({ offset: 25 })
-                .setText(`Name: ${premiseName} - Uncertain level of corrosion`);
+                .setText(`Name: ${premiseName} - Starting deterioration`);
 
               marker = new mapboxgl.Marker({ color: 'yellow' })
                 .setLngLat([lng, lat])
@@ -108,7 +108,7 @@ export class DiPreTreatMapComponent implements OnInit {
             //Corrosion likely - orange
             case 2:
               popup = new mapboxgl.Popup({ offset: 25 })
-                .setText(`Name: ${premiseName} - Corrosion likely`);
+                .setText(`Name: ${premiseName} - Advanced deterioration`);
 
               marker = new mapboxgl.Marker({ color: 'orange' })
                 .setLngLat([lng, lat])

@@ -40,6 +40,7 @@ export class DiPreTreatPremiseComponent implements OnInit {
   last_inspection: string
   creation_year: string
   today: Date
+  warningTemperature: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -51,7 +52,7 @@ export class DiPreTreatPremiseComponent implements OnInit {
     this.today = new Date()
 
     this.message = ""
-
+    this.warningTemperature = false
     this.isAllLoaded = false
 
     this.datesForm = fb.group({
@@ -125,8 +126,8 @@ export class DiPreTreatPremiseComponent implements OnInit {
 
           for (let i = 0; i < sensors.length; i++) {
 
-            y = sensors[i].sensor_data;
-            x = new Date(sensors[i].sensor_timestamp);
+            y = sensors[i].sensor_data; // measurment value
+            x = new Date(sensors[i].sensor_timestamp); // timestamp
 
             let p: Point = new Point(x, y)
 
@@ -149,8 +150,12 @@ export class DiPreTreatPremiseComponent implements OnInit {
                   humidityArray.push(p)
                 break;
               case "temperature":
-                if (!temperatureArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
+                if (!temperatureArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y)))) {
                   temperatureArray.push(p)
+                  if (p.y < -30 && p.y > 50) {
+                    this.warningTemperature = true
+                  }
+                }
                 break;
               case 'wind speed':
                 if (!windSpeedArray.some(data => ((data.x.getTime() == p.x.getTime()) && (data.y == p.y))))
@@ -372,7 +377,7 @@ export class DiPreTreatPremiseComponent implements OnInit {
 
         // Get information about the premise shown
         this.premiseService.getAllPremises().subscribe((premises: Premise[]) => {
-          
+
           let premise = premises.find((p) => p.premises_id == this.premiseId)
 
           if (premise) {
