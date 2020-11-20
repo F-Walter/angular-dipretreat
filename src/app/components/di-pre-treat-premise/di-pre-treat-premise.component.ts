@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription, Observable, of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PremiseService } from 'src/app/services/premises/premise.service';
-import { map, catchError } from 'rxjs/operators';
 import { Sensor } from 'src/app/model/Sensor';
 import * as CanvasJS from '../../external-libraries/canvasjs.min.js';
 import { Point } from 'src/app/model/Point.js';
@@ -40,7 +39,8 @@ export class DiPreTreatPremiseComponent implements OnInit {
   last_inspection: string
   creation_year: string
   today: Date
-  warningTemperature: boolean;
+  warningTemperature: boolean
+  warnTermValue: Number
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -90,9 +90,11 @@ export class DiPreTreatPremiseComponent implements OnInit {
           this.datesForm.get('endDate').setValue(this.today)
         }
 
-        this.premiseService.getAlarmForPremise(Number(this.premiseId)).subscribe((alarms: []) => {          
-          if (alarms.length > 0)
+        this.premiseService.getAlarmForPremise(Number(this.premiseId)).subscribe((alarms: any) => {
+          if (alarms.length > 0) {
+            this.warnTermValue = alarms[0].s_data
             this.warningTemperature = true
+          }
         })
 
         this.premiseService.getPremiseSensorData(this.premiseId, this.startDateSelected, this.endDateSelected).subscribe((sensorData: Sensor[]) => {
