@@ -19,6 +19,7 @@ export class ForecastDialogComponent implements OnInit {
   src: SafeResourceUrl
   today: Date
   oneYearLater: Date;
+  premiseName: string
 
   constructor(
     private premiseService: PremiseService,
@@ -38,6 +39,7 @@ export class ForecastDialogComponent implements OnInit {
     this.oneYearLater = temp
 
     if (this.data.premiseId) this.premiseId = this.data.premiseId
+    if (this.data.premiseName) this.premiseName = this.data.premiseName
 
     this.datesForm = new FormGroup(
       {
@@ -68,8 +70,8 @@ export class ForecastDialogComponent implements OnInit {
       //this.premiseService.sendForecastRequest(this.datesForm.get('start').value, this.datesForm.get('end').value, this.premiseId)
       let url = `https://dipretreatapi.azurewebsites.net/api/predict/?start=${this.convertDateToStringFormat(this.datesForm.get('start').value)}&end=${this.convertDateToStringFormat(this.datesForm.get('end').value)}&building_id=${this.premiseId}&code=vM74fJfsAI1mhf92mWAJguSv2H3gxJ8FsmAcaqdyMDT06WfKzHp1aw==`
       //TODO rimuovere commento e dinamicizzare URL
-      //this.src = url
-      this.src ="https://dipretreatapi.azurewebsites.net/api/predict/?start=2019-01-01&end=2021-01-01&building_id=0&code=vM74fJfsAI1mhf92mWAJguSv2H3gxJ8FsmAcaqdyMDT06WfKzHp1aw=="
+      this.src = url
+      //this.src ="https://dipretreatapi.azurewebsites.net/api/predict/?start=2019-01-01&end=2021-01-01&building_id=0&code=vM74fJfsAI1mhf92mWAJguSv2H3gxJ8FsmAcaqdyMDT06WfKzHp1aw=="
       console.log(this.src);
     }
 

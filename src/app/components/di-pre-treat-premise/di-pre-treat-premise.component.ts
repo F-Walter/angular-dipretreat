@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription, Observable, of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PremiseService } from 'src/app/services/premises/premise.service';
-import { map, catchError } from 'rxjs/operators';
 import { Sensor } from 'src/app/model/Sensor';
 import * as CanvasJS from '../../external-libraries/canvasjs.min.js';
 import { Point } from 'src/app/model/Point.js';
@@ -40,6 +39,8 @@ export class DiPreTreatPremiseComponent implements OnInit {
   last_inspection: string
   creation_year: string
   today: Date
+  warningTemperature: boolean
+  warnTermValue: Number
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -51,7 +52,7 @@ export class DiPreTreatPremiseComponent implements OnInit {
     this.today = new Date()
 
     this.message = ""
-
+    this.warningTemperature = false
     this.isAllLoaded = false
 
     this.datesForm = fb.group({
@@ -89,8 +90,12 @@ export class DiPreTreatPremiseComponent implements OnInit {
           this.datesForm.get('endDate').setValue(this.today)
         }
 
-
-
+        this.premiseService.getAlarmForPremise(Number(this.premiseId)).subscribe((alarms: any) => {
+          if (alarms.length > 0) {
+            this.warnTermValue = alarms[0].s_data
+            this.warningTemperature = true
+          }
+        })
 
         this.premiseService.getPremiseSensorData(this.premiseId, this.startDateSelected, this.endDateSelected).subscribe((sensorData: Sensor[]) => {
           let sensors: Sensor[] = []
@@ -125,8 +130,8 @@ export class DiPreTreatPremiseComponent implements OnInit {
 
           for (let i = 0; i < sensors.length; i++) {
 
-            y = sensors[i].sensor_data;
-            x = new Date(sensors[i].sensor_timestamp);
+            y = sensors[i].sensor_data; // measurment value
+            x = new Date(sensors[i].sensor_timestamp); // timestamp
 
             let p: Point = new Point(x, y)
 
@@ -372,7 +377,7 @@ export class DiPreTreatPremiseComponent implements OnInit {
 
         // Get information about the premise shown
         this.premiseService.getAllPremises().subscribe((premises: Premise[]) => {
-          
+
           let premise = premises.find((p) => p.premises_id == this.premiseId)
 
           if (premise) {
@@ -407,7 +412,7 @@ export class DiPreTreatPremiseComponent implements OnInit {
     const dialogRef = this.dialog.open(ForecastDialogComponent, {
       width: '75%',
       height: '90%',
-      data: { premiseId: premiseId }
+      data: { premiseId: premiseId, premiseName: this.premise_name }
     });
   }
 

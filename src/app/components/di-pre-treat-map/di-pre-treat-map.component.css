@@ -3,3 +3,11 @@
   width: 96%;
   height: 80%;
   }
+
+  .warningTemperature{
+    animation: blink 1s ease-in infinite;
+}  
+  @keyframes blink {
+    from, to { opacity: 1 }
+    50% { opacity: 0 }
+  }
