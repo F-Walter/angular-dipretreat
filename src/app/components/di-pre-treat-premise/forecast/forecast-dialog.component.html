@@ -3,7 +3,7 @@
 </button>
 
 <div class="flexCenterColumn">
-    <h2>Define time window</h2>
+    <h2>Define prediction timeframe for {{premiseName}}</h2>
     <form id="dateContainer" [formGroup]="datesForm">
         <ngb-alert type="danger" *ngIf="!closedAlert" (close)="closedAlert=true">
             The inserted dates are not in the right order.</ngb-alert>

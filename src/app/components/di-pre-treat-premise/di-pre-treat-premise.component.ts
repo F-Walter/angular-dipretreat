@@ -412,7 +412,7 @@ export class DiPreTreatPremiseComponent implements OnInit {
     const dialogRef = this.dialog.open(ForecastDialogComponent, {
       width: '75%',
       height: '90%',
-      data: { premiseId: premiseId }
+      data: { premiseId: premiseId, premiseName: this.premise_name }
     });
   }
 
