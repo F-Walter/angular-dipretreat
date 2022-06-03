@@ -33,7 +33,7 @@
     "@angular/cli": "^10.0.3",
     "@angular/common": "^10.0.4",
     "@angular/compiler-cli": "^9.1.12",
-    "@angular/core": "^10.0.4",
+    "@angular/core": "^11.0.5",
     "@angular/forms": "^10.0.4",
     "@angular/platform-browser": "^10.0.4",
     "@angular/router": "^10.0.4",
